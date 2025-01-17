@@ -1,10 +1,10 @@
-# jumperjumper 🥋
-welcome to my first typescript game project jumperjumper where i will be combining my skills to create a vissually apealing and reactive game with typescript and SASS utilizing the DOM.
+# 🥋 jumperjumper 
+welcome to my first **typescript** game project jumperjumper where i will be combining my skills to create a vissually apealing and reactive game with **typescript** and **SASS** utilizing the **DOM**.
 
 
 ## Project Breakdown
 
-## game loop 🔄
+## 🔄 Game loop 
 
 - game starts
 - block approaches player model
@@ -15,14 +15,16 @@ welcome to my first typescript game project jumperjumper where i will be combini
         - the user must type this word to clear the jump
             - this word can increase in length to increase difficulty/timer is imposed
 ---
-### html/scss 🎨
+### 🎨 HTML/SASS 
+html elements:
+- [] one **div** for player model
+- [] one **div** for block model
 
-- [] one div for player model
-- [] one div for block model
-    - [] the player div must have a keyframe animation on the left side of the screen that jumps 50px of the ground
-    - [] the block div must have a keyframe animation that moves from the right hand side of the screen to the left hand side and to repeat infinitely
+css styling:
+- [] the player **div** must have a **keyframe** animation on the left side of the screen that jumps 50px of the ground
+- [] the block **div** must have a **keyframe** animation that moves from the right hand side of the screen to the left hand side and to repeat infinitely
 ---
-### further design 🧑‍🎨
+### 🧑‍🎨 Further design 
 
 - [] a jumper of 50px x 50px for player
 - [] a rock for the block 50px x 50px
@@ -30,7 +32,7 @@ welcome to my first typescript game project jumperjumper where i will be combini
 - [] background is of a blue sky and sun in the top right corner
 - [] some clouds that move to give the imitation that the player is moving across the screen
 ---
-### typescript logic 👨‍💻
+### 👨‍💻 Typescript logic 
 
 - [] event handler/listener to trigger player animation to jump on command
 - [] event listener to detect weather block and player have collided
