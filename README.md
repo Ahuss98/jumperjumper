@@ -38,6 +38,7 @@ css styling:
 ### 👨‍💻 Typescript logic 
 
 - [x] event handler/listener to trigger player animation to jump on command
+- [x] event handler and global listenre to allow key presses (space bar) to jump
 - [x] event listener to detect weather block and player have collided
     - [] extra functionality:
         - [] event handler for when 3 successful jumps have been inputted to send word block

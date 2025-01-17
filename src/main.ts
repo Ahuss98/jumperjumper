@@ -31,15 +31,18 @@ const handleJump = () => {
     const playerPositionTop = player.offsetTop as number
     const blockPositionLeft = block.offsetLeft as number
     const rockPositionLeft = rock.offsetLeft as number
-    if(playerPositionTop > 98 && (rockPositionLeft < 50 && rockPositionLeft > 10)){
-    // if(playerPositionTop > 98 && (rockPositionLeft < -300 && rockPositionLeft > -340)){
+    if(playerPositionTop > 98 && (rockPositionLeft < 45 && rockPositionLeft > 5)){
       alert('u lose')
       counter = 0
     }
-    // console.log(counter)
-      console.log(rockPositionLeft)
+    console.log(counter)
+      // console.log(rockPositionLeft)
   }, 10)
 
-
+//allowing user to click or use space bar making it mobile friendly
 player.addEventListener('click', handleJump)
 
+//adding keyboard event to the document an not a variable as we want the keyboard events to global
+document.addEventListener('keydown', (event: KeyboardEvent) => {
+  if(event.code ==='Space') handleJump()
+})
