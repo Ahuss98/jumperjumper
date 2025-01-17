@@ -36,6 +36,7 @@ const handleJump = () => {
     const playerPositionTop = player.offsetTop as number
     const blockPositionLeft = block.offsetLeft as number
     const rockPositionLeft = rock.offsetLeft as number
+    //need to fix this for new positions
     if(playerPositionTop > 98 && (rockPositionLeft < 45 && rockPositionLeft > 5)){
      // alert('u lose')
       counter = 0
