@@ -61,7 +61,7 @@ body{
     100% {top: 100px}
 }
 
-.block--img {
+.obstacle {
     height: 70px;
     width: 70px;
     position: relative;
@@ -73,4 +73,24 @@ body{
 @keyframes rockrun{
     0% {left: 90%;}
     100% {left: -50px;}
+}
+
+.slow-obstacle{
+    font-size: 60px;
+    height: 70px;
+    width: 70px;
+    position: relative;
+    top: -60px;
+    left: 350px;
+    animation: 8s rockrun infinite linear;
+}
+
+@keyframes slow_rock_run {
+    0% {
+        left: 90%;
+    }
+
+    100% {
+        left: -50px;
+    }
 }

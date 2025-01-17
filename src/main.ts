@@ -12,9 +12,23 @@ if(!player|| !block || !rock){
 
 let counter: number = 0;
 let isGameActive: boolean = true
+let rockObstacle: boolean = true
 
-const handleWordJump = () => {
-
+const handleObstacleChange = () => {
+  if(rockObstacle){
+    block.innerText = 'WAY'
+    block.classList.add('slow-obstacle')
+    rock.classList.remove('obstacle')
+    block.style.animation = 'animation: 8s'
+    rock.style.display = 'none'
+    rockObstacle = false
+  }
+  // if(!rockObstacle){
+  //   rock.classList.add('obstacle')
+  //   block.classList.remove('obstacle')
+  //   block.style.display = 'none'
+  //   rockObstacle = true
+  // }
 }
 
 const handleJump = () => {
@@ -37,11 +51,14 @@ const handleJump = () => {
     const blockPositionLeft = block.offsetLeft as number
     const rockPositionLeft = rock.offsetLeft as number
     //need to fix this for new positions
-    if(playerPositionTop > 98 && (rockPositionLeft < 45 && rockPositionLeft > 5)){
-     // alert('u lose')
-      counter = 0
-    }
+    // if(playerPositionTop > 98 && (rockPositionLeft < 45 && rockPositionLeft > 5)){
+    //  // alert('u lose')
+    //   counter = 0
+    // }
     console.log(counter)
+    if(counter >= 3){
+      handleObstacleChange()
+    }
       // console.log(rockPositionLeft)
   }, 10)
 
@@ -55,3 +72,12 @@ document.addEventListener('keydown', (event: KeyboardEvent) => {
     handleJump()
   }
 })
+
+if(!rockObstacle){
+  document.addEventListener('keydown',(event: KeyboardEvent) => {
+    //elevate on first letter and land back down on last letter
+    //after last correct charechter word animations speed off screen then i land
+    
+
+  })
+}
