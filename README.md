@@ -21,20 +21,20 @@ html elements:
 - [] one **div** for block model
 
 css styling:
-- [] the player **div** must have a **keyframe** animation on the left side of the screen that jumps 50px of the ground
-- [] the block **div** must have a **keyframe** animation that moves from the right hand side of the screen to the left hand side and to repeat infinitely
+- [x] the player **div** must have a **keyframe** animation on the left side of the screen that jumps 100px of the ground
+- [x] the block **div** must have a **keyframe** animation that moves from the right hand side of the screen to the left hand side and to repeat infinitely
 ---
 ### 🧑‍🎨 Further design 
 
-- [] a jumper of 50px x 50px for player
-- [] a rock for the block 50px x 50px
+- [x] a jumper of 50px x 50px for player
+- [x] a rock for the block 50px x 50px
 - [] animation for jumper to jump 51px off the ground
 - [] background is of a blue sky and sun in the top right corner
 - [] some clouds that move to give the imitation that the player is moving across the screen
 ---
 ### 👨‍💻 Typescript logic 
 
-- [] event handler/listener to trigger player animation to jump on command
+- [x] event handler/listener to trigger player animation to jump on command
 - [] event listener to detect weather block and player have collided
     - [] extra functionality:
         - [] event handler for when 3 successful jumps have been inputted to send word block
