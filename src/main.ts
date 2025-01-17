@@ -27,7 +27,7 @@ const handleJump = () => {
   setInterval(() => {
     const playerPositionTop = player.offsetTop as number
     const blockPositionLeft = block.offsetLeft as number
-    if(playerPositionTop > 98 && blockPositionLeft < 50 ){
+    if(playerPositionTop > 98 && (blockPositionLeft < 50 && blockPositionLeft > 10)){
       alert('u lose')
     }
       console.log(playerPositionTop,blockPositionLeft)

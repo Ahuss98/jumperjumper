@@ -28,14 +28,14 @@ css styling:
 
 - [x] a jumper of 50px x 50px for player
 - [x] a rock for the block 50px x 50px
-- [] animation for jumper to jump 51px off the ground
+- [x] animation for jumper to jump 51px off the ground
 - [] background is of a blue sky and sun in the top right corner
 - [] some clouds that move to give the imitation that the player is moving across the screen
 ---
 ### 👨‍💻 Typescript logic 
 
 - [x] event handler/listener to trigger player animation to jump on command
-- [] event listener to detect weather block and player have collided
+- [x] event listener to detect weather block and player have collided
     - [] extra functionality:
         - [] event handler for when 3 successful jumps have been inputted to send word block
         - [] event listener to detect if word being typed matches block word
