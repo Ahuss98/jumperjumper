@@ -17,8 +17,11 @@ welcome to my first **typescript** game project jumperjumper where i will be com
 ---
 ### 🎨 HTML/SASS 
 html elements:
-- [] one **div** for player model
-- [] one **div** for block model
+- [x] one **div** for player model
+- [x] one **div** for block model
+- [] add click to start menu
+- [] add losing menu
+- [] add pause menu
 
 css styling:
 - [x] the player **div** must have a **keyframe** animation on the left side of the screen that jumps 100px of the ground

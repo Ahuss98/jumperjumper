@@ -7,19 +7,38 @@ body{
     height: 200px;
     width: 400px;
     border: 2px solid black;
+    position: relative;
 }
 
 .player{
-    background-color: red;
     height: 50px;
     width: 50px;
     position: relative;
     top: 150px;
+    &--img {
+        width: 100%;
+            /* Matches the parent width */
+            height: 100%;
+            /* Matches the parent height */
+            position: absolute;
+            /* Aligns inside the .player */
+            top: 0;
+            left: 0;
+            animation: 1s spin linear infinite;
+    }
 }
 .player.jump {
     animation: 1s jump;
 }
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
 
+    100% {
+        transform: rotate(360deg);
+    }
+}
 @keyframes jump {
     0% {top: 150px;}
     30% {top: 50px;}
@@ -29,17 +48,27 @@ body{
 }
 
 .block{
-    background-color: blue;
     height: 50px;
     width: 50px;
     position: relative;
     top: 100px;
     left: 350px;
-    animation: 2s blockrun infinite linear;
-    overflow: visible;
+    // animation: 2s blockrun infinite linear;
+        &--img {
+            width: 100%;
+                /* Matches the parent width */
+                height: 100%;
+                /* Matches the parent height */
+                position: absolute;
+                /* Ensures alignment within .block */
+                top: -2px;
+                left: 0;
+                object-fit: cover;
+                animation: 2s rockrun infinite linear;
+            }
 }
 
-@keyframes blockrun{
-    0% {left: 350px;}
-    100% {left: -100px;}
+@keyframes rockrun{
+    0% {left: 0px;}
+    100% {left: -450px;}
 }

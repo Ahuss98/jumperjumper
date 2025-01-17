@@ -9,6 +9,7 @@ if(!player|| !block){
   throw new Error('it didnt work')
 }
 
+let counter: number = 0;
 
 const handleJump = () => {
   //to remove bug of spam clicking we only allow the addition of classname if the classsname dosnt already exist on the elemnt
@@ -19,6 +20,7 @@ const handleJump = () => {
     setTimeout(() => {
       player.classList.remove('jump')
     }, 1000);
+    counter ++
   }
 }
 //if player top position is between 152 and height of block and
@@ -29,8 +31,9 @@ const handleJump = () => {
     const blockPositionLeft = block.offsetLeft as number
     if(playerPositionTop > 98 && (blockPositionLeft < 50 && blockPositionLeft > 10)){
       alert('u lose')
+      counter = 0
     }
-      console.log(playerPositionTop,blockPositionLeft)
+      //console.log(playerPositionTop,blockPositionLeft)
   }, 10)
 
 
