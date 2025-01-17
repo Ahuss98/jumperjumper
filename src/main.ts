@@ -11,6 +11,11 @@ if(!player|| !block || !rock){
 }
 
 let counter: number = 0;
+let isGameActive: boolean = true
+
+const handleWordJump = () => {
+
+}
 
 const handleJump = () => {
   //to remove bug of spam clicking we only allow the addition of classname if the classsname dosnt already exist on the elemnt
@@ -32,7 +37,7 @@ const handleJump = () => {
     const blockPositionLeft = block.offsetLeft as number
     const rockPositionLeft = rock.offsetLeft as number
     if(playerPositionTop > 98 && (rockPositionLeft < 45 && rockPositionLeft > 5)){
-      alert('u lose')
+     // alert('u lose')
       counter = 0
     }
     console.log(counter)
@@ -44,5 +49,8 @@ player.addEventListener('click', handleJump)
 
 //adding keyboard event to the document an not a variable as we want the keyboard events to global
 document.addEventListener('keydown', (event: KeyboardEvent) => {
-  if(event.code ==='Space') handleJump()
+  if(event.code ==='Space') {
+    event.preventDefault();
+    handleJump()
+  }
 })
