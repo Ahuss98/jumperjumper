@@ -47,28 +47,38 @@ body{
     100% {top: 150px}
 }
 
-.block{
-    height: 50px;
-    width: 50px;
-    position: relative;
-    top: 100px;
-    left: 350px;
-    // animation: 2s blockrun infinite linear;
-        &--img {
-            width: 100%;
-                /* Matches the parent width */
-                height: 100%;
-                /* Matches the parent height */
-                position: absolute;
-                /* Ensures alignment within .block */
-                top: -2px;
-                left: 0;
-                object-fit: cover;
-                animation: 2s rockrun infinite linear;
-            }
+// .block{
+//     background-color: blue;
+//     height: 50px;
+//     width: 50px;
+//     position: relative;
+//     top: 100px;
+//     left: 350px;
+//     // animation: 2s blockrun infinite linear;
+//         &--img {
+//             width: 100%;
+//                 /* Matches the parent width */
+//                 height: 100%;
+//                 /* Matches the parent height */
+//                 position: relative;
+//                 /* Ensures alignment within .block */
+//                 top: -2px;
+//                 left: 0;
+//                 object-fit: cover;
+//                 animation: 2s rockrun infinite linear;
+//             }
+// }
+
+.block--img {
+        height: 50px;
+            width: 50px;
+            position: relative;
+            top: 100px;
+            left: 350px;
+            animation: 2s rockrun infinite linear;
 }
 
 @keyframes rockrun{
-    0% {left: 0px;}
-    100% {left: -450px;}
+    0% {left: 350px;}
+    100% {left: -50px;}
 }

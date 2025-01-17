@@ -2,10 +2,11 @@ import './styles/styles.scss'
 //grabs the html element with a classname of player
 const player = document.querySelector<HTMLDivElement>('.player')
 const block = document.querySelector<HTMLDivElement>('.block')
+const rock = document.querySelector<HTMLImageElement>('.block--img')
 
 
 //checks if player is null
-if(!player|| !block){
+if(!player|| !block || !rock){
   throw new Error('it didnt work')
 }
 
@@ -29,11 +30,14 @@ const handleJump = () => {
   setInterval(() => {
     const playerPositionTop = player.offsetTop as number
     const blockPositionLeft = block.offsetLeft as number
-    if(playerPositionTop > 98 && (blockPositionLeft < 50 && blockPositionLeft > 10)){
+    const rockPositionLeft = rock.offsetLeft as number
+    if(playerPositionTop > 98 && (rockPositionLeft < 50 && rockPositionLeft > 10)){
+    // if(playerPositionTop > 98 && (rockPositionLeft < -300 && rockPositionLeft > -340)){
       alert('u lose')
       counter = 0
     }
-      //console.log(playerPositionTop,blockPositionLeft)
+    // console.log(counter)
+      console.log(rockPositionLeft)
   }, 10)
 
 
