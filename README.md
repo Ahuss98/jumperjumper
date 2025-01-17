@@ -1,5 +1,5 @@
 # jumperjumper 🥋
-welcome to my first typescript game project jumperjumper where i will be combining my skills to create a vissually apealing and reactive game with typescript and SASS
+welcome to my first typescript game project jumperjumper where i will be combining my skills to create a vissually apealing and reactive game with typescript and SASS utilizing the DOM.
 
 
 ## Project Breakdown
