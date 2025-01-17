@@ -1,3 +1,6 @@
+$sky : rgb(167, 238, 238);
+$floor : rgb(223, 124, 53);
+
 body{
     padding: 0px;
     margin: 0px;
@@ -10,22 +13,68 @@ body{
 .main-game-container{
     height: 200px;
     width: 100%;
-    border: 2px solid black;
     position: relative;
-    background-color: rgb(223, 124, 53);
+    background-color: $floor;
     display: flex;
     flex-direction: column;
 }
-// .sky-background{
-//     border: 2px solid black;
-//     background-color: grey;
-//     width: 100%;
-//     height: 50px;
-// }
+
 .sky-background{
-    background-color: rgb(167, 238, 238);
-            width: 100%;
-            height: 150px;
+    background-color: $sky;
+    width: 100%;
+    height: 150px;
+}
+.sun-container{
+    max-width: 100%;
+    height: 50px;
+    position: relative;
+    left: 90%;
+    img{
+        position: absolute;
+        max-width: 50px;
+        animation: sunTilt 5s linear infinite;
+    }
+}
+@keyframes sunTilt {
+    0% {
+        transform: rotate(0deg);
+    }
+    30%{
+        transform: rotate(45deg);
+    }
+    70% {
+        transform: rotate(-45deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.cactus-container{
+    max-width: 100%;
+    height:100px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    position: relative;
+    overflow: hidden;
+    &--img{
+        position: absolute;
+        max-width: 50px;
+        animation: cactusMove 5s linear infinite;
+    }
+}
+
+@keyframes cactusMove{
+0% {
+        left: 110%;
+        /* Start outside the right edge */
+    }
+
+    100% {
+        left: -50px;
+        /* End outside the left edge */
+    }
 }
 .title-container {
     display: flex;
@@ -37,7 +86,7 @@ body{
     height: 50px;
     width: 50px;
     position: relative;
-    top: 150px;
+    top: 100px;
     &--img {
         width: 100%;
             /* Matches the parent width */
@@ -45,7 +94,7 @@ body{
             /* Matches the parent height */
             position: absolute;
             /* Aligns inside the .player */
-            top: 0;
+            top: -100px;
             left: 0;
             animation: 1s spin linear infinite;
     }
@@ -63,45 +112,23 @@ body{
     }
 }
 @keyframes jump {
-    0% {top: 150px;}
-    30% {top: 50px;}
-    50% {top: 50px;}
-    70% {top: 50px}
-    100% {top: 150px}
+    0% {top: 100px;}
+    30% {top: 20px;}
+    50% {top: 20px;}
+    70% {top: 20px}
+    100% {top: 100px}
 }
 
-// .block{
-//     background-color: blue;
-//     height: 50px;
-//     width: 50px;
-//     position: relative;
-//     top: 100px;
-//     left: 350px;
-//     // animation: 2s blockrun infinite linear;
-//         &--img {
-//             width: 100%;
-//                 /* Matches the parent width */
-//                 height: 100%;
-//                 /* Matches the parent height */
-//                 position: relative;
-//                 /* Ensures alignment within .block */
-//                 top: -2px;
-//                 left: 0;
-//                 object-fit: cover;
-//                 animation: 2s rockrun infinite linear;
-//             }
-// }
-
 .block--img {
-        height: 50px;
-            width: 50px;
-            position: relative;
-            top: 100px;
-            left: 350px;
-            animation: 2s rockrun infinite linear;
+    height: 50px;
+    width: 50px;
+    position: relative;
+    top: -50px;
+    left: 350px;
+    animation: 2s rockrun infinite linear;
 }
 
 @keyframes rockrun{
-    0% {left: 350px;}
+    0% {left: 90%;}
     100% {left: -50px;}
 }
