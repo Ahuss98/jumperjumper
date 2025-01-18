@@ -6,12 +6,19 @@ const rock = document.querySelector<HTMLImageElement>('.block--img')
 const scoreNumb = document.querySelector<HTMLParagraphElement>('.score--number')
 
 
+const wordsArray = ['hello','hi','good','type','extra']
+
 //checks if player is null
 if(!player|| !block || !rock || !scoreNumb){
   throw new Error('it didnt work')
 }
 
-const word: string[] = ['a','b']
+const randomWordGen = (arrayOfWords:string[]) => {
+  const randomNumb:number =  Math.floor(Math.random() * arrayOfWords.length)
+  word = arrayOfWords[randomNumb].split('')
+}
+
+let word: string[] = ['e','a','t']
 let score: number = 0;
 let isGameActive: boolean = true //for ending the game 
 let rockObstacle: boolean = true
@@ -103,6 +110,7 @@ const handleTyping = (event: KeyboardEvent) => {
       if(word.length === 0){
         score++
         handleScoreUpdate()
+        randomWordGen(wordsArray)
       }
     } else {
       console.log('incorrect letter')
