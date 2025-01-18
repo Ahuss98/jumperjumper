@@ -33,7 +33,9 @@ css styling:
 - [x] a rock for the block 50px x 50px
 - [x] animation for jumper to jump 51px off the ground
 - [] background is of a blue sky and sun in the top right corner
-- [] some clouds that move to give the imitation that the player is moving across the screen
+- [] some clouds that move to give the imitation that the player is moving across the 
+    screen
+- [] create and design an end screen
 ---
 ### 👨‍💻 Typescript logic 
 
@@ -44,3 +46,5 @@ css styling:
         - [] event handler for when 3 successful jumps have been inputted to send word block
         - [] event listener to detect if word being typed matches block word
         - [] handler to let player model jump over word block and reset game loop
+        - [] when failed a jump show end screen
+        - [] create functionality for end screen to allow player to restart game

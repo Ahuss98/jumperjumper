@@ -10,26 +10,30 @@ if(!player|| !block || !rock){
   throw new Error('it didnt work')
 }
 
-let counter: number = 0;
-let isGameActive: boolean = true
+const word: string = 'a'
+let score: number = 0;
+let isGameActive: boolean = true //for ending the game 
 let rockObstacle: boolean = true
 
-const handleObstacleChange = () => {
+const handleObstacleChangeToWord = () => {
   if(rockObstacle){
-    block.innerText = 'WAY'
+    block.innerText = word
     block.classList.add('slow-obstacle')
     rock.classList.remove('obstacle')
-    block.style.animation = 'animation: 8s'
     rock.style.display = 'none'
+    block.style.display = 'block'
     rockObstacle = false
+  }}
+
+  const handleObstacleChangeToRock = () => {
+      if(!rockObstacle){
+      rock.classList.add('obstacle')
+      block.classList.remove('slow-obstacle')
+      block.style.display = 'none'
+      rock.style.display = 'block'
+      rockObstacle = true
+      }
   }
-  // if(!rockObstacle){
-  //   rock.classList.add('obstacle')
-  //   block.classList.remove('obstacle')
-  //   block.style.display = 'none'
-  //   rockObstacle = true
-  // }
-}
 
 const handleJump = () => {
   //to remove bug of spam clicking we only allow the addition of classname if the classsname dosnt already exist on the elemnt
@@ -40,7 +44,7 @@ const handleJump = () => {
     setTimeout(() => {
       player.classList.remove('jump')
     }, 1000);
-    counter ++
+    score ++
   }
 }
 //if player top position is between 152 and height of block and
@@ -53,31 +57,50 @@ const handleJump = () => {
     //need to fix this for new positions
     // if(playerPositionTop > 98 && (rockPositionLeft < 45 && rockPositionLeft > 5)){
     //  // alert('u lose')
-    //   counter = 0
+    //   score = 0
     // }
-    console.log(counter)
-    if(counter >= 3){
-      handleObstacleChange()
+    console.log(score)
+    if(score !== 0 && score % 3 === 0){
+      handleObstacleChangeToWord()
+    } else {
+      if(!rockObstacle) handleObstacleChangeToRock()
     }
       // console.log(rockPositionLeft)
   }, 10)
+
+  let currentIndex:number = 0
 
 //allowing user to click or use space bar making it mobile friendly
 player.addEventListener('click', handleJump)
 
 //adding keyboard event to the document an not a variable as we want the keyboard events to global
 document.addEventListener('keydown', (event: KeyboardEvent) => {
+  if(rockObstacle){
   if(event.code ==='Space') {
+    console.log(event.code)
     event.preventDefault();
     handleJump()
   }
+} else {
+  console.log('key pressed', event.key)
+      const currentLetter = word[currentIndex]
+      console.log('currentletter',currentLetter)
+      console.log(event.key === currentLetter)
+      console.log(currentIndex)
+    if (event.key === currentLetter){
+      console.log('correct letter')
+      currentIndex++
+      if(currentIndex === word.length){
+        console.log('word complete')
+        rockObstacle = true
+        currentIndex = 0
+        score ++
+        console.log(score)
+      }
+    } else {
+      console.log('incorrect letter')
+      alert('you lost')
+      currentIndex = 0;
+    }    
+  }
 })
-
-if(!rockObstacle){
-  document.addEventListener('keydown',(event: KeyboardEvent) => {
-    //elevate on first letter and land back down on last letter
-    //after last correct charechter word animations speed off screen then i land
-    
-
-  })
-}
