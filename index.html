@@ -9,12 +9,20 @@
   <body>
     <head>
       <div class="title-container">
-        <h1>jumperjumper</h1></div>
+        <h1>jumperjumper</h1>
+      </div>
+
     </head>
     <main class="main-game-container">
       <div class="sky-background">
-        <div class="sun-container">
-          <img src="./public/media/moon-svgrepo-com.svg" alt="">
+        <div class="sky-background__top">
+                <div class="score">
+        <p class="score--title">score:</p>
+        <p class="score--number">0</p>
+      </div>
+          <div class="moon-container">
+            <img src="./public/media/moon-svgrepo-com.svg" alt="">
+          </div>
         </div>
         <div class="cactus-container">
           <img src="./public/media/cactus-svgrepo-com.svg" alt="" class=" cactus-container--img">
@@ -24,6 +32,7 @@
         </div>
         <div class="block">
         </div>
+        <!-- not in a div because it ruins the animations -->
           <img src="./public/media/Rock--Streamline-Openmoji.svg" alt="" class="block block--img obstacle">
       </div>
     </main>

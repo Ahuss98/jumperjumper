@@ -3,10 +3,11 @@ import './styles/styles.scss'
 const player = document.querySelector<HTMLDivElement>('.player')
 const block = document.querySelector<HTMLDivElement>('.block')
 const rock = document.querySelector<HTMLImageElement>('.block--img')
+const scoreNumb = document.querySelector<HTMLParagraphElement>('.score--number')
 
 
 //checks if player is null
-if(!player|| !block || !rock){
+if(!player|| !block || !rock || !scoreNumb){
   throw new Error('it didnt work')
 }
 
@@ -14,6 +15,10 @@ const word: string = 'a'
 let score: number = 0;
 let isGameActive: boolean = true //for ending the game 
 let rockObstacle: boolean = true
+
+const handleScoreUpdate = () => {
+  scoreNumb.innerText = score.toString()
+}
 
 const handleObstacleChangeToWord = () => {
   if(rockObstacle){
@@ -45,8 +50,9 @@ const handleJump = () => {
       //this will remove the classname jump after 1s (which is the same time it takes to finish the animation)
       setTimeout(() => {
         player.classList.remove('jump')
+        score ++
+        handleScoreUpdate()
       }, 1000);
-      score ++
     }
   }
 }
@@ -74,7 +80,7 @@ const handleTyping = (event: KeyboardEvent) => {
       console.log('correct letter')
       // currentIndex++
       score ++
-
+      handleScoreUpdate()
       //this caused the problem of not being able to change back to other obstacle once score was updated
       // if(currentIndex === word.length){
       //   console.log('word complete')
@@ -87,6 +93,7 @@ const handleTyping = (event: KeyboardEvent) => {
       alert('you lost')
       score = 0
       currentIndex = 0;
+      handleScoreUpdate()
     }    
   }
 }
