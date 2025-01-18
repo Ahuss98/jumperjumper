@@ -22,10 +22,12 @@ html elements:
 - [] add click to start menu
 - [] add losing menu
 - [] add pause menu
+- [x] add score tracking
 
 css styling:
 - [x] the player **div** must have a **keyframe** animation on the left side of the screen that jumps 100px of the ground
 - [x] the block **div** must have a **keyframe** animation that moves from the right hand side of the screen to the left hand side and to repeat infinitely
+- [] add moon which can switch to the sunand make the screen day time and change to sun
 ---
 ### 🧑‍🎨 Further design 
 
@@ -43,7 +45,7 @@ css styling:
 - [x] event handler and global listenre to allow key presses (space bar) to jump
 - [x] event listener to detect weather block and player have collided
     - [] extra functionality:
-        - [] event handler for when 3 successful jumps have been inputted to send word block
+        - [x] event handler for when 3 successful jumps have been inputted to send word block
         - [] event listener to detect if word being typed matches block word
         - [] handler to let player model jump over word block and reset game loop
         - [] when failed a jump show end screen

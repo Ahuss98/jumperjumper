@@ -11,7 +11,7 @@ if(!player|| !block || !rock || !scoreNumb){
   throw new Error('it didnt work')
 }
 
-const word: string = 'a'
+const word: string[] = ['a','b']
 let score: number = 0;
 let isGameActive: boolean = true //for ending the game 
 let rockObstacle: boolean = true
@@ -19,10 +19,10 @@ let rockObstacle: boolean = true
 const handleScoreUpdate = () => {
   scoreNumb.innerText = score.toString()
 }
-
+//changes display to show to word obstacle
 const handleObstacleChangeToWord = () => {
   if(rockObstacle){
-    block.innerText = word
+    block.innerText = word.join('')
     block.classList.add('slow-obstacle')
     rock.classList.remove('obstacle')
     rock.style.display = 'none'
@@ -39,6 +39,10 @@ const handleObstacleChangeToWord = () => {
       rockObstacle = true
       }
   }
+
+  // const wordAttck = () => {
+  //   const arrCopy = 
+  // }
 
 const handleJump = () => {
   //this ensures you cant click jump if word obstacle is on screen
@@ -66,28 +70,40 @@ const handleSpaceJump = (event: KeyboardEvent) => {
     }
   }
 }
+const handleLoop = (arrOfLetters: string[], event:KeyboardEvent) => {
+  arrOfLetters.forEach((e,i) => {
+    if(event.key !== e){
+      console.log('incorrect letter')
+      alert('you lost')
+      score = 0
+      currentIndex = 0;
+      handleScoreUpdate()
+    } else {
+      
+    }
+  })
+}
+
+
 
 let currentIndex:number = 0
 
 const handleTyping = (event: KeyboardEvent) => {
   if(!rockObstacle) {
-    console.log('key pressed', event.key)
       const currentLetter = word[currentIndex]
-      console.log('currentletter',currentLetter)
-      console.log(event.key === currentLetter)
-      console.log(currentIndex)
     if (event.key === currentLetter){
+      // let newArr:string[] = [...word]
+      word.shift()
+      block.innerText = word.join('')
+      console.log(word.length)
       console.log('correct letter')
       // currentIndex++
-      score ++
+      // score ++
       handleScoreUpdate()
-      //this caused the problem of not being able to change back to other obstacle once score was updated
-      // if(currentIndex === word.length){
-      //   console.log('word complete')
-      //   rockObstacle = true
-      //   currentIndex = 0
-      //   console.log(score)
-      // }
+      if(word.length === 0){
+        score++
+        handleScoreUpdate()
+      }
     } else {
       console.log('incorrect letter')
       alert('you lost')
