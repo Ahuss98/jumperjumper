@@ -103,10 +103,10 @@ const handleTyping = (event: KeyboardEvent) => {
     //   score = 0
     // }
     console.log(score)
-    if(score % 3 !== 0){
+    if(score % 4 !== 0){
       handleObstacleChangeToRock()
     }
-    if(score !== 0 && score % 3 === 0){
+    if(score !== 0 && score % 4 === 0){
       handleObstacleChangeToWord()
     }
       // console.log(rockPositionLeft)

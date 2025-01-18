@@ -2,9 +2,9 @@ $sky : rgb(167, 238, 238);
 $floor : rgb(223, 124, 53);
 
 .sky-background {
-    background-color: $sky;
+    background-color: black;
     width: 100%;
-    height: 150px;
+    height: 175px;
     padding: 0%;
     margin: 0%;
 }
@@ -42,7 +42,7 @@ $floor : rgb(223, 124, 53);
 
 .cactus-container {
     max-width: 100%;
-    height: 100px;
+    height: 125px;
     display: flex;
     justify-content: center;
     align-items: end;

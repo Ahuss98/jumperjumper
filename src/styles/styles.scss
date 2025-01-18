@@ -1,7 +1,13 @@
 @use './background.scss';
+@use './player-obstacle.scss';
 
 $sky : rgb(167, 238, 238);
 $floor : rgb(223, 124, 53);
+
+head{
+    padding: 0px;
+    margin: 0px;
+}
 
 body{
     padding: 0px;
@@ -10,6 +16,7 @@ body{
     justify-content: center;
     align-content: center;
     flex-direction: column;
+    background-image: url('../../public/media/modified_underground_space_with_gap.png');
 }
 
 .main-game-container{
@@ -26,71 +33,6 @@ body{
     justify-content: center;
     align-items: center;
 }
-
-.player{
-    height: 50px;
-    width: 50px;
-    position: relative;
-    top: 100px;
-    &--img {
-        width: 100%;
-            height: 100%;
-            position: absolute;
-            top: -100px;
-            left: 15px;
-            animation: 1s spin linear infinite;
-    }
-}
-.player.jump {
-    animation: 1s jump;
-}
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-@keyframes jump {
-    0% {top: 100px;}
-    30% {top: 20px;}
-    50% {top: 20px;}
-    70% {top: 20px}
-    100% {top: 100px}
-}
-
-.obstacle {
-    height: 70px;
-    width: 70px;
-    position: relative;
-    top: -60px;
-    left: 350px;
-    animation: 2s rockrun infinite linear;
-}
-
-@keyframes rockrun{
-    0% {left: 90%;}
-    100% {left: -50px;}
-}
-
-.slow-obstacle{
-    font-size: 60px;
-    height: 70px;
-    width: 70px;
-    position: relative;
-    top: -60px;
-    left: 350px;
-    animation: 8s rockrun infinite linear;
-}
-
-@keyframes slow_rock_run {
-    0% {
-        left: 90%;
-    }
-
-    100% {
-        left: -50px;
-    }
+h1 {
+    color: white;
 }
