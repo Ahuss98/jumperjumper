@@ -47,10 +47,6 @@ const handleObstacleChangeToWord = () => {
       }
   }
 
-  // const wordAttck = () => {
-  //   const arrCopy = 
-  // }
-
 const handleJump = () => {
   //this ensures you cant click jump if word obstacle is on screen
   if(rockObstacle){
@@ -77,21 +73,6 @@ const handleSpaceJump = (event: KeyboardEvent) => {
     }
   }
 }
-const handleLoop = (arrOfLetters: string[], event:KeyboardEvent) => {
-  arrOfLetters.forEach((e,i) => {
-    if(event.key !== e){
-      console.log('incorrect letter')
-      alert('you lost')
-      score = 0
-      currentIndex = 0;
-      handleScoreUpdate()
-    } else {
-      
-    }
-  })
-}
-
-
 
 let currentIndex:number = 0
 
@@ -99,13 +80,10 @@ const handleTyping = (event: KeyboardEvent) => {
   if(!rockObstacle) {
       const currentLetter = word[currentIndex]
     if (event.key === currentLetter){
-      // let newArr:string[] = [...word]
       word.shift()
       block.innerText = word.join('')
       console.log(word.length)
       console.log('correct letter')
-      // currentIndex++
-      // score ++
       handleScoreUpdate()
       if(word.length === 0){
         score++
@@ -118,21 +96,25 @@ const handleTyping = (event: KeyboardEvent) => {
       score = 0
       currentIndex = 0;
       handleScoreUpdate()
-    }    
+    }
+    // setInterval(() => {
+    //   alert('u lose')
+    // }, 8000)    
   }
 }
 //if player top position is between 152 and height of block and
 // if block left position is between 0 and width of block
 
   setInterval(() => {
-    const playerPositionTop = player.offsetTop as number
-    const blockPositionLeft = block.offsetLeft as number
+    const playerPositionTop = player.offsetTop as number //start at 250 jumps to 175
+    const blockPositionLeft = block.offsetLeft as number  //start at 350 ends of screen at 0
     const rockPositionLeft = rock.offsetLeft as number
     //need to fix this for new positions
-    // if(playerPositionTop > 98 && (rockPositionLeft < 45 && rockPositionLeft > 5)){
-    //  // alert('u lose')
-    //   score = 0
-    // }
+    if(playerPositionTop > 200  && (rockPositionLeft < 30 && rockPositionLeft > 10) || blockPositionLeft < 50 && blockPositionLeft > 10){
+    alert('u lose')
+    score = 0
+  }
+  // console.log(playerPositionTop,rockPositionLeft)
     console.log(score)
     if(score % 4 !== 0){
       handleObstacleChangeToRock()
