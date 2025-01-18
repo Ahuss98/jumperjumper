@@ -36,15 +36,58 @@ const handleObstacleChangeToWord = () => {
   }
 
 const handleJump = () => {
-  //to remove bug of spam clicking we only allow the addition of classname if the classsname dosnt already exist on the elemnt
-  if(!player.classList.contains('jump')){
-    //this will add the class name jump to the html elemnt with classname player
-    player.classList.add('jump')
-    //this will remove the classname jump after 1s (which is the same time it takes to finish the animation)
-    setTimeout(() => {
-      player.classList.remove('jump')
-    }, 1000);
-    score ++
+  //this ensures you cant click jump if word obstacle is on screen
+  if(rockObstacle){
+    //to remove bug of spam clicking we only allow the addition of classname if the classsname dosnt already exist on the elemnt
+    if(!player.classList.contains('jump')){
+      //this will add the class name jump to the html elemnt with classname player
+      player.classList.add('jump')
+      //this will remove the classname jump after 1s (which is the same time it takes to finish the animation)
+      setTimeout(() => {
+        player.classList.remove('jump')
+      }, 1000);
+      score ++
+    }
+  }
+}
+
+const handleSpaceJump = (event: KeyboardEvent) => {
+  if(rockObstacle){
+    if(event.code ==='Space') {
+      console.log('in handle tyuping on rock obstacle',event.code)
+      event.preventDefault();
+      handleJump()
+    }
+  }
+}
+
+let currentIndex:number = 0
+
+const handleTyping = (event: KeyboardEvent) => {
+  if(!rockObstacle) {
+    console.log('key pressed', event.key)
+      const currentLetter = word[currentIndex]
+      console.log('currentletter',currentLetter)
+      console.log(event.key === currentLetter)
+      console.log(currentIndex)
+    if (event.key === currentLetter){
+      console.log('correct letter')
+      // currentIndex++
+      score ++
+
+      //this caused the problem of not being able to change back to other obstacle once score was updated
+      // if(currentIndex === word.length){
+      //   console.log('word complete')
+      //   rockObstacle = true
+      //   currentIndex = 0
+      //   console.log(score)
+      // }
+    } else {
+      console.log('incorrect letter')
+      alert('you lost')
+      score = 0
+      currentIndex = 0;
+    }    
   }
 }
 //if player top position is between 152 and height of block and
@@ -60,47 +103,24 @@ const handleJump = () => {
     //   score = 0
     // }
     console.log(score)
+    if(score % 3 !== 0){
+      handleObstacleChangeToRock()
+    }
     if(score !== 0 && score % 3 === 0){
       handleObstacleChangeToWord()
-    } else {
-      if(!rockObstacle) handleObstacleChangeToRock()
     }
       // console.log(rockPositionLeft)
   }, 10)
 
-  let currentIndex:number = 0
+
 
 //allowing user to click or use space bar making it mobile friendly
-player.addEventListener('click', handleJump)
+document.addEventListener('click', handleJump)
+document.addEventListener('keydown',handleSpaceJump)
+
+document.addEventListener('keydown',handleTyping)
+
+
 
 //adding keyboard event to the document an not a variable as we want the keyboard events to global
-document.addEventListener('keydown', (event: KeyboardEvent) => {
-  if(rockObstacle){
-  if(event.code ==='Space') {
-    console.log(event.code)
-    event.preventDefault();
-    handleJump()
-  }
-} else {
-  console.log('key pressed', event.key)
-      const currentLetter = word[currentIndex]
-      console.log('currentletter',currentLetter)
-      console.log(event.key === currentLetter)
-      console.log(currentIndex)
-    if (event.key === currentLetter){
-      console.log('correct letter')
-      currentIndex++
-      if(currentIndex === word.length){
-        console.log('word complete')
-        rockObstacle = true
-        currentIndex = 0
-        score ++
-        console.log(score)
-      }
-    } else {
-      console.log('incorrect letter')
-      alert('you lost')
-      currentIndex = 0;
-    }    
-  }
-})
+// document.addEventListener('keydown', handleTyping)
