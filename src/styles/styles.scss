@@ -1,5 +1,6 @@
 @use './background.scss';
 @use './player-obstacle.scss';
+@import url('https://fonts.googleapis.com/css2?family=Nabla&display=swap');
 
 $sky : rgb(167, 238, 238);
 $floor : rgb(147, 95, 57);
@@ -7,6 +8,7 @@ $floor : rgb(147, 95, 57);
 head{
     padding: 0px;
     margin: 0px;
+    font-family: 'Nabla';
 }
 
 body{
