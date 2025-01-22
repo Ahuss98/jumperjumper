@@ -5,26 +5,49 @@ const block = document.querySelector<HTMLDivElement>('.block')
 const rock = document.querySelector<HTMLImageElement>('.block--img')
 const scoreNumb = document.querySelector<HTMLParagraphElement>('.score--number')
 
+//level up after 2 succesfull word clears
 
-const wordsArray = ['hello','hi','good','type','extra']
+const wordsArrayLevel = [["cat", "dog", "bat", "sun", "hat", "car", "run", "fan", "map", "box"],["tree", "book", "fish", "door", "wolf", "cake", "moon", "star", "fire", "rock"],["apple", "bread", "grape", "table", "plant", "chair", "stone", "light", "river", "house"],["banana", "bridge", "garden", "planet", "orange", "stream", "rocket", "window", "silver", "forest"],["picture", "college", "cabinet", "fantasy", "journey", "mystery", "teacher", "fashion", "partner", "station"],["umbrella", "dinosaur", "laughter", "computer", "elephant", "treasure", "chocolate", "sunshine", "vacation", "building"]]
+
+const wordsArray = //wordsArrayLevel[level]
+["cat", "dog", "bat", "sun", "hat", "car", "run", "fan", "map", "box"]
+
+let level = 0
+let wordCleared = 0
 
 //checks if player is null
 if(!player|| !block || !rock || !scoreNumb){
   throw new Error('it didnt work')
 }
 
-const randomWordGen = (arrayOfWords:string[]) => {
-  const randomNumb:number =  Math.floor(Math.random() * arrayOfWords.length)
-  word = arrayOfWords[randomNumb].split('')
+const randomWordGen = (arrayOfWords:string[][]) => {
+  if(level <= arrayOfWords.length){
+    const currArr: string[] = arrayOfWords[level]
+    const randomNumb:number =  Math.floor(Math.random() * currArr.length)
+    word = currArr[randomNumb].split('')
+  }
 }
 
-let word: string[] = ['e','a','t']
+let word: string[] = ['t','y','p','e'] //first word will alwayse be type so the user knows not to jump
 let score: number = 0;
 let isGameActive: boolean = true //for ending the game 
 let rockObstacle: boolean = true
 
+const handleWordChange = () => {
+  if( level % 2 === 0){
+  }
+}
+
+const handleLevelUp = () => {
+      if(wordCleared % 2 === 0 && score !== 0){
+      level ++
+      }
+      console.log(level,'this is the level')
+      // randomWordGen(wordsArray)
+}
 const handleScoreUpdate = () => {
   scoreNumb.innerText = score.toString()
+  // handleLevelUp()
 }
 //changes display to show to word obstacle
 const handleObstacleChangeToWord = () => {
@@ -57,7 +80,9 @@ const handleJump = () => {
       //this will remove the classname jump after 1s (which is the same time it takes to finish the animation)
       setTimeout(() => {
         player.classList.remove('jump')
+        //score only updates when this happens to ensure score dosnt update if un seccesful jump
         score ++
+        
         handleScoreUpdate()
       }, 1000);
     }
@@ -87,13 +112,18 @@ const handleTyping = (event: KeyboardEvent) => {
       handleScoreUpdate()
       if(word.length === 0){
         score++
+        ++wordCleared 
+        console.log(wordCleared,'<-- word cleared score')
         handleScoreUpdate()
-        randomWordGen(wordsArray)
+        handleLevelUp()
+        randomWordGen(wordsArrayLevel)
       }
     } else {
       console.log('incorrect letter')
+      console.log(currentLetter)
       alert('you lost')
       score = 0
+      wordCleared = 0
       currentIndex = 0;
       handleScoreUpdate()
     }  
@@ -106,8 +136,10 @@ const handleTyping = (event: KeyboardEvent) => {
     const rockPositionLeft = rock.offsetLeft as number //start at 350 ends of screen at 0
     //need to fix this for new positions
     if(playerPositionTop > 200  && (rockPositionLeft < 30 && rockPositionLeft > 10) || blockPositionLeft < 50 && blockPositionLeft > 10){
-    alert('u lose')
+    //alert('u lose')
     score = 0
+    wordCleared = 0
+    level = 0
   }
   // console.log(playerPositionTop,rockPositionLeft)
     console.log(score)
@@ -117,6 +149,10 @@ const handleTyping = (event: KeyboardEvent) => {
     if(score !== 0 && score % 4 === 0){
       handleObstacleChangeToWord()
     }
+    // if(wordCleared % 2 === 0 && wordCleared !== 0){
+    //   level++
+    //   console.log(level,'<-- level')
+    // }
       // console.log(rockPositionLeft)
   }, 10)
 
@@ -130,5 +166,5 @@ document.addEventListener('keydown',handleTyping)
 
 
 
-//adding keyboard event to the document an not a variable as we want the keyboard events to global
+//adding keyboard event to the document an not a variable as we want the keyboard events to global also changed the click to the document so that the player can click anywhere on the screen
 // document.addEventListener('keydown', handleTyping)
