@@ -29,6 +29,7 @@ let isGameActive: boolean = false //for ending the game screen
 let rockObstacle: boolean = true
 let level = 0
 let wordCleared = 0
+let highScore = 0
 
 const randomWordGen = (arrayOfWords:string[][]) => {
   if(level <= arrayOfWords.length){
@@ -41,10 +42,15 @@ const handleGameLoss = () => {
   if(isGameActive){
     console.log(isGameActive,'in true')
     isGameActive = false
-    gameStartText.innerText = `score: ${score}`
+    gameStartText.innerText = `Score: ${score}  HighScore: ${highScore}`
     gameContainer.style.display = 'none'
     gameStart.style.display = 'flex'
 
+  }
+}
+const handleHighscore = () => {
+  if(score>highScore){
+    highScore = score
   }
 }
 const handleGameStart = () => {
@@ -142,6 +148,7 @@ const handleTyping = (event: KeyboardEvent) => {
       console.log(currentLetter)
       handleGameLoss()
       alert('you lost')
+      handleHighscore()
       score = 0
       wordCleared = 0
       currentIndex = 0;
@@ -157,6 +164,7 @@ const handleTyping = (event: KeyboardEvent) => {
     //need to fix this for new positions
     if(playerPositionTop > 200  && (rockPositionLeft < 30 && rockPositionLeft > 10) || blockPositionLeft < 50 && blockPositionLeft > 10){
     //alert('u lose')
+    handleHighscore()
     handleGameLoss()
     score = 0
     wordCleared = 0
