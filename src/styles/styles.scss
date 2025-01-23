@@ -32,7 +32,20 @@ body{
     display: flex;
     flex-direction: column;
 }
-
+.main-display-container{
+    display: none;
+}
+.game-start{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    height: 400px;
+    color: white;
+    font-size: 30px;
+    
+}
 .title-container {
     display: flex;
     justify-content: center;

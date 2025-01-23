@@ -4,6 +4,10 @@ const player = document.querySelector<HTMLDivElement>('.player')
 const block = document.querySelector<HTMLDivElement>('.block')
 const rock = document.querySelector<HTMLImageElement>('.block--img')
 const scoreNumb = document.querySelector<HTMLParagraphElement>('.score--number')
+const gameContainer = document.querySelector<HTMLDivElement>('.main-display-container')
+const gameStart = document.querySelector<HTMLDivElement>('.game-start')
+const gameStartBtn = document.querySelector<HTMLButtonElement>('.game-start__btn')
+const gameStartText = document.querySelector<HTMLParagraphElement>('.game-start__text')
 
 //level up after 2 succesfull word clears
 
@@ -12,13 +16,19 @@ const wordsArrayLevel = [["cat", "dog", "bat", "sun", "hat", "car", "run", "fan"
 const wordsArray = //wordsArrayLevel[level]
 ["cat", "dog", "bat", "sun", "hat", "car", "run", "fan", "map", "box"]
 
-let level = 0
-let wordCleared = 0
 
 //checks if player is null
-if(!player|| !block || !rock || !scoreNumb){
-  throw new Error('it didnt work')
+if(!player|| !block || !rock || !scoreNumb || !gameContainer || !gameStart || !gameStartBtn || !gameStartText){
+  throw new Error(`it didnt work`)
 }
+
+
+let word: string[] = ['t','y','p','e'] //first word will alwayse be type so the user knows not to jump
+let score: number = 0;
+let isGameActive: boolean = false //for ending the game screen
+let rockObstacle: boolean = true
+let level = 0
+let wordCleared = 0
 
 const randomWordGen = (arrayOfWords:string[][]) => {
   if(level <= arrayOfWords.length){
@@ -27,14 +37,23 @@ const randomWordGen = (arrayOfWords:string[][]) => {
     word = currArr[randomNumb].split('')
   }
 }
+const handleGameLoss = () => {
+  if(isGameActive){
+    console.log(isGameActive,'in true')
+    isGameActive = false
+    gameStartText.innerText = `score: ${score}`
+    gameContainer.style.display = 'none'
+    gameStart.style.display = 'flex'
 
-let word: string[] = ['t','y','p','e'] //first word will alwayse be type so the user knows not to jump
-let score: number = 0;
-let isGameActive: boolean = true //for ending the game 
-let rockObstacle: boolean = true
-
-const handleWordChange = () => {
-  if( level % 2 === 0){
+  }
+}
+const handleGameStart = () => {
+    if(!isGameActive){
+    console.log(isGameActive,'in false')
+    isGameActive = true
+    console.log('you clicked start game')
+    gameContainer.style.display = 'block'
+    gameStart.style.display = 'none'
   }
 }
 
@@ -121,6 +140,7 @@ const handleTyping = (event: KeyboardEvent) => {
     } else {
       console.log('incorrect letter')
       console.log(currentLetter)
+      handleGameLoss()
       alert('you lost')
       score = 0
       wordCleared = 0
@@ -137,10 +157,11 @@ const handleTyping = (event: KeyboardEvent) => {
     //need to fix this for new positions
     if(playerPositionTop > 200  && (rockPositionLeft < 30 && rockPositionLeft > 10) || blockPositionLeft < 50 && blockPositionLeft > 10){
     //alert('u lose')
+    handleGameLoss()
     score = 0
     wordCleared = 0
     level = 0
-  }
+    }
   // console.log(playerPositionTop,rockPositionLeft)
     console.log(score)
     if(score % 4 !== 0){
@@ -159,9 +180,9 @@ const handleTyping = (event: KeyboardEvent) => {
 
 
 //allowing user to click or use space bar making it mobile friendly
+gameStartBtn.addEventListener('click',handleGameStart)
 document.addEventListener('click', handleJump)
 document.addEventListener('keydown',handleSpaceJump)
-
 document.addEventListener('keydown',handleTyping)
 
 
