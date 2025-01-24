@@ -54,7 +54,7 @@ const randomWordGen = (arrayOfWords:string[][]) => {
     word = currArr[randomNumb].split('')
   }
 }
-randomWordGen(wordsArrayLevel)
+
 const handleGameLoss = (reason:string) => {
   if(isGameActive){
     console.log(isGameActive,'in true')
@@ -101,6 +101,7 @@ const handleGameStart = () => {
     gameStart.style.display = 'none'
     body.style.backgroundImage = `url(${inGameBackgroundImage})`
     backGroundMusic.play()
+    randomWordGen(wordsArrayLevel)
   }
 }
 
@@ -198,6 +199,7 @@ const handleTyping = (event: KeyboardEvent) => {
       wordCleared = 0
       level = 0
       currentIndex = 0;
+      randomWordGen(wordsArrayLevel)
       handleObstacleChangeToRock()
       handleScoreUpdate()
     }  
