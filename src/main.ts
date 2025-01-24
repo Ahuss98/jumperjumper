@@ -6,6 +6,7 @@ import typeSound from '../public/sound/retro-coin-1-236677.mp3'
 import losingMusic from '../public/sound/failure-1-89170.mp3'
 import inGameBackgroundImage from '../public/media/modified_underground_space_with_gap.png'
 import loadingBackgroundImage from '../public/media/dessertbackground.webp'
+import { wordsArrayLevel } from './data'
 
 //grabs the html element with a classname of player
 const player = document.querySelector<HTMLDivElement>('.player')
@@ -22,10 +23,8 @@ const body = document.querySelector<HTMLBodyElement>('body')
 
 //level up after 2 succesfull word clears
 
-const wordsArrayLevel = [["cat", "dog", "bat", "sun", "hat", "car", "run", "fan", "map", "box"],["tree", "book", "fish", "door", "wolf", "cake", "moon", "star", "fire", "rock"],["apple", "bread", "grape", "table", "plant", "chair", "stone", "light", "river", "house"],["banana", "bridge", "garden", "planet", "orange", "stream", "rocket", "window", "silver", "forest"],["picture", "college", "cabinet", "fantasy", "journey", "mystery", "teacher", "fashion", "partner", "station"],["umbrella", "dinosaur", "laughter", "computer", "elephant", "treasure", "chocolate", "sunshine", "vacation", "building"]]
+// const wordsArrayLevel = [["cat", "dog", "bat", "sun", "hat", "car", "run", "fan", "map", "box"],["tree", "book", "fish", "door", "wolf", "cake", "moon", "star", "fire", "rock"],["apple", "bread", "grape", "table", "plant", "chair", "stone", "light", "river", "house"],["banana", "bridge", "garden", "planet", "orange", "stream", "rocket", "window", "silver", "forest"],["picture", "college", "cabinet", "fantasy", "journey", "mystery", "teacher", "fashion", "partner", "station"],["umbrella", "dinosaur", "laughter", "computer", "elephant", "treasure", "chocolate", "sunshine", "vacation", "building"]]
 
-const wordsArray = //wordsArrayLevel[level]
-["cat", "dog", "bat", "sun", "hat", "car", "run", "fan", "map", "box"]
 
 
 //checks if player is null
@@ -43,7 +42,7 @@ let word: string[] = ['t','y','p','e'] //first word will alwayse be type so the 
 let score: number = 0;
 let isGameActive: boolean = false //for ending the game screen
 let rockObstacle: boolean = true
-let lost: boolean = false
+// let lost: boolean = false
 let level = 0
 let wordCleared = 0
 let highScore = 0
@@ -55,6 +54,7 @@ const randomWordGen = (arrayOfWords:string[][]) => {
     word = currArr[randomNumb].split('')
   }
 }
+randomWordGen(wordsArrayLevel)
 const handleGameLoss = (reason:string) => {
   if(isGameActive){
     console.log(isGameActive,'in true')
@@ -196,7 +196,9 @@ const handleTyping = (event: KeyboardEvent) => {
       handleHighscore()
       score = 0
       wordCleared = 0
+      level = 0
       currentIndex = 0;
+      handleObstacleChangeToRock()
       handleScoreUpdate()
     }  
   }
