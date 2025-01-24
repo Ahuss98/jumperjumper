@@ -19,7 +19,6 @@ body{
     flex-direction: column;
     background-image: url('../../public/media/dessertbackground.webp');
     background-repeat:repeat-x;
-    background-blend-mode:normal;
     background-color: $floor;
 }
 .score{
@@ -41,19 +40,22 @@ body{
 .game-start{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     // background-color: red;
+    padding-bottom: 30px;
     height: 400px;
     font-size: 30px;
-    padding-bottom:30px ;
-    color: white;
-    text-shadow: 1px 1px 5px black;
+    color: black;
+    text-shadow: 1px 1px 5px white;
     background-image: url('../../public/media/dessertbackground.webp');
     background-position:90%;
     background-size: 100%;
     border: 10px solid black;
     &__text{
+        display: flex;
+        flex-direction: column;
+        border: 2px slid black;
         &--highscore{
             background-color: $floor;
             padding: 5px;
@@ -70,7 +72,6 @@ body{
         }
     }
     &--btn{
-
     }
 }
 .title-container {
@@ -84,5 +85,10 @@ h1 {
     font-family: 'Nabla', sans-serif;
     /* offset-x | offset-y | blur-radius | color (found on MDN)*/
         text-shadow: 1px 1px 2px black; 
-
 }
+
+// footer{
+//     height: 400px;
+//     background-color: black;
+//     margin-top: 70%;
+// }

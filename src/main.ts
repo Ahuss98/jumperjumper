@@ -15,6 +15,7 @@ const scoreNumb = document.querySelector<HTMLParagraphElement>('.score--number')
 const gameContainer = document.querySelector<HTMLDivElement>('.main-display-container')
 const gameStart = document.querySelector<HTMLDivElement>('.game-start')
 const gameStartBtn = document.querySelector<HTMLButtonElement>('.game-start__btn')
+const gameTextContainer = document.querySelector<HTMLDivElement>('.game-start__text')
 const gameStartTextHighscore = document.querySelector<HTMLParagraphElement>('.game-start__text--highscore')
 const gameStartTextScore = document.querySelector<HTMLParagraphElement>('.game-start__text--currentscore')
 const body = document.querySelector<HTMLBodyElement>('body')
@@ -28,7 +29,7 @@ const wordsArray = //wordsArrayLevel[level]
 
 
 //checks if player is null
-if(!player|| !block || !rock || !scoreNumb || !gameContainer || !gameStart || !gameStartBtn || !gameStartTextHighscore || !gameStartTextScore || !body){
+if(!player|| !block || !rock || !scoreNumb || !gameContainer || !gameStart || !gameStartBtn || !gameStartTextHighscore || !gameStartTextScore || !body || !gameTextContainer){
   throw new Error(`it didnt work`)
 }
 
@@ -42,7 +43,7 @@ let word: string[] = ['t','y','p','e'] //first word will alwayse be type so the 
 let score: number = 0;
 let isGameActive: boolean = false //for ending the game screen
 let rockObstacle: boolean = true
-// let lostText: boolean = false
+let lost: boolean = false
 let level = 0
 let wordCleared = 0
 let highScore = 0
@@ -59,19 +60,22 @@ const handleGameLoss = (reason:string) => {
     console.log(isGameActive,'in true')
     isGameActive = false
 
+    let losingText = document.querySelector<HTMLParagraphElement>('.losing-text');
 
-      const losingText = document.createElement('p')
-      losingText.classList.add('losing-text')
-      gameStart.appendChild(losingText)
+    if (!losingText) {
+      // If it doesn't exist create it 
+      losingText = document.createElement('p');
+      losingText.classList.add('losing-text');
+      gameTextContainer.appendChild(losingText);
+    }
       
       
-      if(reason === 'collision' && losingText){
-        losingText.innerText = 'you missed timed your jump'
-        losingText.innerHTML = ''
-      }
-      if(reason === 'typing' && losingText){
-        losingText.innerText = 'you typed the wrong letter'
-      }
+    if(reason === 'collision'){
+      losingText.innerText = 'you missed timed your jump'
+    }
+    if(reason === 'typing'){
+      losingText.innerText = 'you typed the wrong letter'
+    }
 
     gameStartTextScore.innerText = `Score: ${score}`
     gameStartTextHighscore.innerText =  `HighScore: ${highScore}`
