@@ -17,7 +17,10 @@ body{
     justify-content: center;
     align-content: center;
     flex-direction: column;
-    background-image: url('../../public/media/modified_underground_space_with_gap.png');
+    background-image: url('../../public/media/dessertbackground.webp');
+    background-repeat:repeat-x;
+    background-blend-mode:normal;
+    background-color: $floor;
 }
 .score{
     display: flex;
@@ -40,20 +43,34 @@ body{
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    background-color: red;
+    // background-color: red;
     height: 400px;
     font-size: 30px;
     padding-bottom:30px ;
+    color: white;
+    text-shadow: 1px 1px 5px black;
+    background-image: url('../../public/media/dessertbackground.webp');
+    background-position:90%;
+    background-size: 100%;
+    border: 10px solid black;
     &__text{
         &--highscore{
+            background-color: $floor;
+            padding: 5px;
+            border: 5px solid black;
             font-family: 'Nabla',sans-serif;
+            text-shadow: 1px 1px 2px black;
         }
         &--currentscore{
+            background-color: $floor;
+            padding: 5px;
+            border: 5px solid black;
             font-family: 'Nabla', sans-serif;
+            text-shadow: 1px 1px 2px black; 
         }
     }
     &--btn{
-        
+
     }
 }
 .title-container {

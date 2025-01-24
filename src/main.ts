@@ -4,6 +4,8 @@ import finishedWord from '../public/sound/achievement-video-game-type-1-230515.m
 import JumpSound from '../public/sound/retro-jump-3-236683.mp3'
 import typeSound from '../public/sound/retro-coin-1-236677.mp3'
 import losingMusic from '../public/sound/failure-1-89170.mp3'
+import inGameBackgroundImage from '../public/media/modified_underground_space_with_gap.png'
+import loadingBackgroundImage from '../public/media/dessertbackground.webp'
 
 //grabs the html element with a classname of player
 const player = document.querySelector<HTMLDivElement>('.player')
@@ -15,6 +17,7 @@ const gameStart = document.querySelector<HTMLDivElement>('.game-start')
 const gameStartBtn = document.querySelector<HTMLButtonElement>('.game-start__btn')
 const gameStartTextHighscore = document.querySelector<HTMLParagraphElement>('.game-start__text--highscore')
 const gameStartTextScore = document.querySelector<HTMLParagraphElement>('.game-start__text--currentscore')
+const body = document.querySelector<HTMLBodyElement>('body')
 
 //level up after 2 succesfull word clears
 
@@ -25,7 +28,7 @@ const wordsArray = //wordsArrayLevel[level]
 
 
 //checks if player is null
-if(!player|| !block || !rock || !scoreNumb || !gameContainer || !gameStart || !gameStartBtn || !gameStartTextHighscore || !gameStartTextScore){
+if(!player|| !block || !rock || !scoreNumb || !gameContainer || !gameStart || !gameStartBtn || !gameStartTextHighscore || !gameStartTextScore || !body){
   throw new Error(`it didnt work`)
 }
 
@@ -39,6 +42,7 @@ let word: string[] = ['t','y','p','e'] //first word will alwayse be type so the 
 let score: number = 0;
 let isGameActive: boolean = false //for ending the game screen
 let rockObstacle: boolean = true
+// let lostText: boolean = false
 let level = 0
 let wordCleared = 0
 let highScore = 0
@@ -50,18 +54,33 @@ const randomWordGen = (arrayOfWords:string[][]) => {
     word = currArr[randomNumb].split('')
   }
 }
-const handleGameLoss = () => {
+const handleGameLoss = (reason:string) => {
   if(isGameActive){
     console.log(isGameActive,'in true')
     isGameActive = false
+
+
+      const losingText = document.createElement('p')
+      losingText.classList.add('losing-text')
+      gameStart.appendChild(losingText)
+      
+      
+      if(reason === 'collision' && losingText){
+        losingText.innerText = 'you missed timed your jump'
+        losingText.innerHTML = ''
+      }
+      if(reason === 'typing' && losingText){
+        losingText.innerText = 'you typed the wrong letter'
+      }
+
     gameStartTextScore.innerText = `Score: ${score}`
     gameStartTextHighscore.innerText =  `HighScore: ${highScore}`
     gameContainer.style.display = 'none'
     gameStart.style.display = 'flex'
-    backGroundMusic.pause(); // Stops playback
-    backGroundMusic.currentTime = 0; 
+    backGroundMusic.pause(); // Stops music
+    backGroundMusic.currentTime = 0; //ressets music track back to start
     losingNoise.play()
-
+    body.style.backgroundImage = `url(${loadingBackgroundImage})`
   }
 }
 const handleHighscore = () => {
@@ -76,6 +95,7 @@ const handleGameStart = () => {
     console.log('you clicked start game')
     gameContainer.style.display = 'block'
     gameStart.style.display = 'none'
+    body.style.backgroundImage = `url(${inGameBackgroundImage})`
     backGroundMusic.play()
   }
 }
@@ -167,7 +187,7 @@ const handleTyping = (event: KeyboardEvent) => {
     } else {
       console.log('incorrect letter')
       console.log(currentLetter)
-      handleGameLoss()
+      handleGameLoss('typing')
       // alert('you lost')
       handleHighscore()
       score = 0
@@ -186,7 +206,7 @@ const handleTyping = (event: KeyboardEvent) => {
     if(playerPositionTop > 200  && (rockPositionLeft < 30 && rockPositionLeft > 10) || blockPositionLeft < 50 && blockPositionLeft > 10){
     //alert('u lose')
     handleHighscore()
-    handleGameLoss()
+    handleGameLoss('collision')
     score = 0
     wordCleared = 0
     level = 0
