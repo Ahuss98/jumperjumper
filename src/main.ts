@@ -1,4 +1,6 @@
 import './styles/styles.scss'
+import gameMusic from '../public/sound/cottagecore-17463.mp3'
+
 //grabs the html element with a classname of player
 const player = document.querySelector<HTMLDivElement>('.player')
 const block = document.querySelector<HTMLDivElement>('.block')
@@ -7,7 +9,8 @@ const scoreNumb = document.querySelector<HTMLParagraphElement>('.score--number')
 const gameContainer = document.querySelector<HTMLDivElement>('.main-display-container')
 const gameStart = document.querySelector<HTMLDivElement>('.game-start')
 const gameStartBtn = document.querySelector<HTMLButtonElement>('.game-start__btn')
-const gameStartText = document.querySelector<HTMLParagraphElement>('.game-start__text')
+const gameStartTextHighscore = document.querySelector<HTMLParagraphElement>('.game-start__text--highscore')
+const gameStartTextScore = document.querySelector<HTMLParagraphElement>('.game-start__text--currentscore')
 
 //level up after 2 succesfull word clears
 
@@ -18,10 +21,11 @@ const wordsArray = //wordsArrayLevel[level]
 
 
 //checks if player is null
-if(!player|| !block || !rock || !scoreNumb || !gameContainer || !gameStart || !gameStartBtn || !gameStartText){
+if(!player|| !block || !rock || !scoreNumb || !gameContainer || !gameStart || !gameStartBtn || !gameStartTextHighscore || !gameStartTextScore){
   throw new Error(`it didnt work`)
 }
 
+const backGroundMusic = new Audio(gameMusic)
 
 let word: string[] = ['t','y','p','e'] //first word will alwayse be type so the user knows not to jump
 let score: number = 0;
@@ -42,9 +46,11 @@ const handleGameLoss = () => {
   if(isGameActive){
     console.log(isGameActive,'in true')
     isGameActive = false
-    gameStartText.innerText = `Score: ${score}  HighScore: ${highScore}`
+    gameStartTextScore.innerText = `Score: ${score}`
+    gameStartTextHighscore.innerText =  `HighScore: ${highScore}`
     gameContainer.style.display = 'none'
     gameStart.style.display = 'flex'
+    backGroundMusic.pause()
 
   }
 }
@@ -60,6 +66,7 @@ const handleGameStart = () => {
     console.log('you clicked start game')
     gameContainer.style.display = 'block'
     gameStart.style.display = 'none'
+    backGroundMusic.play()
   }
 }
 
@@ -178,11 +185,6 @@ const handleTyping = (event: KeyboardEvent) => {
     if(score !== 0 && score % 4 === 0){
       handleObstacleChangeToWord()
     }
-    // if(wordCleared % 2 === 0 && wordCleared !== 0){
-    //   level++
-    //   console.log(level,'<-- level')
-    // }
-      // console.log(rockPositionLeft)
   }, 10)
 
 

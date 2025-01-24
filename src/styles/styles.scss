@@ -38,13 +38,23 @@ body{
 .game-start{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     background-color: red;
     height: 400px;
-    color: white;
     font-size: 30px;
-    
+    padding-bottom:30px ;
+    &__text{
+        &--highscore{
+            font-family: 'Nabla',sans-serif;
+        }
+        &--currentscore{
+            font-family: 'Nabla', sans-serif;
+        }
+    }
+    &--btn{
+        
+    }
 }
 .title-container {
     display: flex;
