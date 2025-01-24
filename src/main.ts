@@ -1,5 +1,9 @@
 import './styles/styles.scss'
 import gameMusic from '../public/sound/cottagecore-17463.mp3'
+import finishedWord from '../public/sound/achievement-video-game-type-1-230515.mp3'
+import JumpSound from '../public/sound/retro-jump-3-236683.mp3'
+import typeSound from '../public/sound/retro-coin-1-236677.mp3'
+import losingMusic from '../public/sound/failure-1-89170.mp3'
 
 //grabs the html element with a classname of player
 const player = document.querySelector<HTMLDivElement>('.player')
@@ -26,6 +30,10 @@ if(!player|| !block || !rock || !scoreNumb || !gameContainer || !gameStart || !g
 }
 
 const backGroundMusic = new Audio(gameMusic)
+const wordComplete = new Audio(finishedWord)
+const jumpNoise = new Audio(JumpSound)
+const typeNoise = new Audio(typeSound)
+const losingNoise = new Audio(losingMusic)
 
 let word: string[] = ['t','y','p','e'] //first word will alwayse be type so the user knows not to jump
 let score: number = 0;
@@ -50,7 +58,9 @@ const handleGameLoss = () => {
     gameStartTextHighscore.innerText =  `HighScore: ${highScore}`
     gameContainer.style.display = 'none'
     gameStart.style.display = 'flex'
-    backGroundMusic.pause()
+    backGroundMusic.pause(); // Stops playback
+    backGroundMusic.currentTime = 0; 
+    losingNoise.play()
 
   }
 }
@@ -109,6 +119,7 @@ const handleJump = () => {
     if(!player.classList.contains('jump')){
       //this will add the class name jump to the html elemnt with classname player
       player.classList.add('jump')
+      jumpNoise.play()
       //this will remove the classname jump after 1s (which is the same time it takes to finish the animation)
       setTimeout(() => {
         player.classList.remove('jump')
@@ -137,12 +148,15 @@ const handleTyping = (event: KeyboardEvent) => {
   if(!rockObstacle) {
       const currentLetter = word[currentIndex]
     if (event.key === currentLetter){
+      typeNoise.currentTime = 0;
+      typeNoise.play()
       word.shift()
       block.innerText = word.join('')
       console.log(word.length)
       console.log('correct letter')
       handleScoreUpdate()
       if(word.length === 0){
+        wordComplete.play()
         score++
         ++wordCleared 
         console.log(wordCleared,'<-- word cleared score')
@@ -154,7 +168,7 @@ const handleTyping = (event: KeyboardEvent) => {
       console.log('incorrect letter')
       console.log(currentLetter)
       handleGameLoss()
-      alert('you lost')
+      // alert('you lost')
       handleHighscore()
       score = 0
       wordCleared = 0
