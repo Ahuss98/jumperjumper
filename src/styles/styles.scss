@@ -71,8 +71,12 @@ body{
             text-shadow: 1px 1px 2px black; 
         }
     }
-    &--btn{
-    }
+    &__btn{
+        background-color: $floor;
+        font-family: 'Nabla',
+            sans-serif;
+        
+        }
 }
 .title-container {
     display: flex;

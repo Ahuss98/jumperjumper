@@ -201,6 +201,24 @@ const handleTyping = (event: KeyboardEvent) => {
     }  
   }
 }
+const handleClickWord = () => {
+  if(!rockObstacle){
+    typeNoise.currentTime = 0;
+    typeNoise.play()
+    word.shift()
+    block.innerText = word.join('')
+    handleScoreUpdate()
+    if(word.length === 0){
+        wordComplete.play()
+        score++
+        ++wordCleared 
+        console.log(wordCleared,'<-- word cleared score')
+        handleScoreUpdate()
+        handleLevelUp()
+        randomWordGen(wordsArrayLevel)
+      }
+  }
+}
 
   setInterval(() => {
     const playerPositionTop = player.offsetTop as number //start at 250 jumps to 175
@@ -229,6 +247,7 @@ const handleTyping = (event: KeyboardEvent) => {
 
 //allowing user to click or use space bar making it mobile friendly
 gameStartBtn.addEventListener('click',handleGameStart)
+block.addEventListener('click',handleClickWord)
 document.addEventListener('click', handleJump)
 document.addEventListener('keydown',handleSpaceJump)
 document.addEventListener('keydown',handleTyping)
