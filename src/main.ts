@@ -85,6 +85,7 @@ const handleGameLoss = (reason:string) => {
     backGroundMusic.currentTime = 0; //ressets music track back to start
     losingNoise.play()
     body.style.backgroundImage = `url(${loadingBackgroundImage})`
+    handleObstacleChangeToRock()
   }
 }
 const handleHighscore = () => {
