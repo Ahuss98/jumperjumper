@@ -42,7 +42,6 @@ let word: string[] = ['t','y','p','e'] //first word will alwayse be type so the 
 let score: number = 0;
 let isGameActive: boolean = false //for ending the game screen
 let rockObstacle: boolean = true
-// let lost: boolean = false
 let level = 0
 let wordCleared = 0
 let highScore = 0
@@ -68,8 +67,6 @@ const handleGameLoss = (reason:string) => {
       losingText.classList.add('losing-text');
       gameTextContainer.appendChild(losingText);
     }
-      
-      
     if(reason === 'collision'){
       losingText.innerText = 'you missed timed your jump'
     }
@@ -140,8 +137,20 @@ const handleObstacleChangeToWord = () => {
       block.style.display = 'none'
       rock.style.display = 'block'
       rockObstacle = true
+      // sendRockObstacle()
       }
   }
+
+  // const sendRockObstacle = () => {
+  //   if(!rock.classList.contains('obstacle')){
+  //     rock.classList.add('obstacle')
+  //     console.log('adding')
+  //     setTimeout(() => {
+  //       console.log('remoiving')
+  //       rock.classList.remove('obstacle')
+  //     },2000)
+  //   }
+  // }
 
 const handleJump = () => {
   //this ensures you cant click jump if word obstacle is on screen
@@ -152,11 +161,11 @@ const handleJump = () => {
       player.classList.add('jump')
       jumpNoise.play()
       //this will remove the classname jump after 1s (which is the same time it takes to finish the animation)
+      score ++
       setTimeout(() => {
         player.classList.remove('jump')
         //score only updates when this happens to ensure score dosnt update if un seccesful jump
-        score ++
-        
+        // hasJumped = false
         handleScoreUpdate()
       }, 1000);
     }
@@ -206,6 +215,7 @@ const handleTyping = (event: KeyboardEvent) => {
       level = 0
       currentIndex = 0;
       randomWordGen(wordsArrayLevel)
+      //makes next obstacle in new game back to rock
       handleObstacleChangeToRock()
       handleScoreUpdate()
     }  
@@ -243,13 +253,16 @@ const handleClickWord = () => {
     wordCleared = 0
     level = 0
     }
+    if(rockPositionLeft < -40){
+      if(score !== 0 && score % 4 === 0){
+        handleObstacleChangeToWord()
+      }
+    }
   // console.log(playerPositionTop,rockPositionLeft)
     console.log(score)
     if(score % 4 !== 0){
+      // sendRockObstacle()
       handleObstacleChangeToRock()
-    }
-    if(score !== 0 && score % 4 === 0){
-      handleObstacleChangeToWord()
     }
   }, 10)
 
