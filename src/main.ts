@@ -5,7 +5,7 @@ import JumpSound from '../public/sound/retro-jump-3-236683.mp3'
 import typeSound from '../public/sound/retro-coin-1-236677.mp3'
 import losingMusic from '../public/sound/failure-1-89170.mp3'
 import inGameBackgroundImage from '../public/media/modified_underground_space_with_gap.png'
-import loadingBackgroundImage from '../public/media/dessertbackground.webp'
+import loadingBackgroundImage from '../public/media/sky.webp'
 import { wordsArrayLevel } from './data'
 
 //grabs the html element with a classname of player

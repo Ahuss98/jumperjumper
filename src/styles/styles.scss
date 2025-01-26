@@ -17,9 +17,7 @@ body{
     justify-content: center;
     align-content: center;
     flex-direction: column;
-    background-image: url('../../public/media/dessertbackground.webp');
-    background-repeat:repeat-x;
-    background-color: $floor;
+    background-image: url('../../public/media/sky.webp');
 }
 .score{
     display: flex;
@@ -79,6 +77,11 @@ body{
             sans-serif;
         
         }
+    &__btn:hover{
+        color: #fff;
+        transform: scale(1.5);
+        cursor:pointer;
+    }
 }
 .title-container {
     display: flex;
