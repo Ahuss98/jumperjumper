@@ -76,9 +76,14 @@ const handleGameLoss = (reason:string) => {
     if(reason === 'typing'){
       losingText.innerText = 'you typed the wrong letter'
     }
+    if( score >= highScore){
+      gameStartTextHighscore.innerText =  `New Highscore !!!`
+      gameStartTextScore.innerText = `${score}`
+    } else {
+      gameStartTextScore.innerText = `Score: ${score}`
+      gameStartTextHighscore.innerText =  `HighScore: ${highScore}`
+    }
 
-    gameStartTextScore.innerText = `Score: ${score}`
-    gameStartTextHighscore.innerText =  `HighScore: ${highScore}`
     gameContainer.style.display = 'none'
     gameStart.style.display = 'flex'
     backGroundMusic.pause(); // Stops music
