@@ -214,6 +214,7 @@ const handleTyping = (event: KeyboardEvent) => {
 }
 const handleClickWord = () => {
   if(!rockObstacle){
+    typeNoise.pause()
     typeNoise.currentTime = 0;
     typeNoise.play()
     word.shift()
