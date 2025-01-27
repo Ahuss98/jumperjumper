@@ -21,13 +21,6 @@ const gameStartTextHighscore = document.querySelector<HTMLParagraphElement>('.ga
 const gameStartTextScore = document.querySelector<HTMLParagraphElement>('.game-start__text--currentscore')
 const body = document.querySelector<HTMLBodyElement>('body')
 
-//level up after 2 succesfull word clears
-
-// const wordsArrayLevel = [["cat", "dog", "bat", "sun", "hat", "car", "run", "fan", "map", "box"],["tree", "book", "fish", "door", "wolf", "cake", "moon", "star", "fire", "rock"],["apple", "bread", "grape", "table", "plant", "chair", "stone", "light", "river", "house"],["banana", "bridge", "garden", "planet", "orange", "stream", "rocket", "window", "silver", "forest"],["picture", "college", "cabinet", "fantasy", "journey", "mystery", "teacher", "fashion", "partner", "station"],["umbrella", "dinosaur", "laughter", "computer", "elephant", "treasure", "chocolate", "sunshine", "vacation", "building"]]
-
-
-
-//checks if player is null
 if(!player|| !block || !rock || !scoreNumb || !gameContainer || !gameStart || !gameStartBtn || !gameStartTextHighscore || !gameStartTextScore || !body || !gameTextContainer){
   throw new Error(`it didnt work`)
 }
@@ -113,11 +106,9 @@ const handleLevelUp = () => {
       level ++
       }
       console.log(level,'this is the level')
-      // randomWordGen(wordsArray)
 }
 const handleScoreUpdate = () => {
   scoreNumb.innerText = score.toString()
-  // handleLevelUp()
 }
 //changes display to show to word obstacle
 const handleObstacleChangeToWord = () => {
