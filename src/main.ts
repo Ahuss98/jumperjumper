@@ -240,7 +240,7 @@ const handleClickWord = () => {
   }
 }
 
-  setInterval(() => {
+  const smooth = () => {
     const playerPositionTop = player.offsetTop as number //start at 250 jumps to 175
     const blockPositionLeft = block.offsetLeft as number  //start at 350 ends of screen at 0
     const rockPositionLeft = rock.offsetLeft as number //start at 350 ends of screen at 0
@@ -264,7 +264,43 @@ const handleClickWord = () => {
       // sendRockObstacle()
       handleObstacleChangeToRock()
     }
-  }, 10)
+  
+  }
+
+
+  //research requestanimationFrame to i can explain it 
+  const test = () => {
+    smooth()
+    requestAnimationFrame(test)
+  }
+
+  requestAnimationFrame(test)
+
+  // setInterval(() => {
+  //   const playerPositionTop = player.offsetTop as number //start at 250 jumps to 175
+  //   const blockPositionLeft = block.offsetLeft as number  //start at 350 ends of screen at 0
+  //   const rockPositionLeft = rock.offsetLeft as number //start at 350 ends of screen at 0
+  //   //need to fix this for new positions
+  //   if(playerPositionTop > 200  && (rockPositionLeft < 30 && rockPositionLeft > 10) || blockPositionLeft < 50 && blockPositionLeft > 10){
+  //   //alert('u lose')
+  //   handleHighscore()
+  //   handleGameLoss('collision')
+  //   score = 0
+  //   wordCleared = 0
+  //   level = 0
+  //   }
+  //   if(rockPositionLeft < -40){
+  //     if(score !== 0 && score % 4 === 0){
+  //       handleObstacleChangeToWord()
+  //     }
+  //   }
+  // // console.log(playerPositionTop,rockPositionLeft)
+  //   console.log(score)
+  //   if(score % 4 !== 0){
+  //     // sendRockObstacle()
+  //     handleObstacleChangeToRock()
+  //   }
+  // }, 10)
 
 
 
