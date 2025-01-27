@@ -1,6 +1,7 @@
 {
   "name": "jumperjumper",
-  "private": true,
+  "homepage": "https://ahuss98.github.io/jumperjumper/",
+  "private": false,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -9,6 +10,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "gh-pages": "^6.3.0",
     "sass-embedded": "^1.83.4",
     "typescript": "~5.6.2",
     "vite": "^6.0.5"
