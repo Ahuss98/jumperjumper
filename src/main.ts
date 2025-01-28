@@ -2,6 +2,7 @@ import './styles/styles.scss'
 import { backGroundMusic,wordComplete,jumpNoise,typeNoise,losingNoise } from './audio' //these are the audio files I used 
 import { wordsArrayLevel } from './data' //an array with arrays with words of certain lengths
 import inGameBackgroundImage from '../public/media/modified_underground_space_with_gap.png'
+import repeatingBackground from '../public/media/Screenshot 2025-01-18 at 17.11.23.png'
 import loadingBackgroundImage from '../public/media/sky.webp'
 
 //grabs the html elements
@@ -78,8 +79,21 @@ const handleGameLoss = (reason:string) => {
     backGroundMusic.pause(); // Stops music
     backGroundMusic.currentTime = 0; //ressets music track back to start
     losingNoise.play() // plays music from the start
-    body.style.backgroundImage = `url(${loadingBackgroundImage})` //changes background image 
+    body.style.backgroundImage = `url(${loadingBackgroundImage})` //changes background image
+    body.style.backgroundRepeat = 'repeat' 
     handleObstacleChangeToRock()  //changes obstacle back to rock for next game
+  }
+}
+//checks wheather game is inactive first then displays the the game container and hides the menu
+const handlemenu = () => {
+    if(!isGameActive){
+    isGameActive = true
+    gameContainer.style.display = 'block'
+    menu.style.display = 'none'
+    body.style.backgroundImage = `url(${inGameBackgroundImage})`
+      body.style.backgroundRepeat = 'repeat-x' 
+    backGroundMusic.play()
+    randomWordGen(wordsArrayLevel)
   }
 }
 
@@ -90,17 +104,6 @@ const handleHighscore = () => {
   }
 }
 
-//checks wheather game is inactive first then displays the the game container and hides the menu
-const handlemenu = () => {
-    if(!isGameActive){
-    isGameActive = true
-    gameContainer.style.display = 'block'
-    menu.style.display = 'none'
-    body.style.backgroundImage = `url(${inGameBackgroundImage})`
-    backGroundMusic.play()
-    randomWordGen(wordsArrayLevel)
-  }
-}
 
 //updates the level
 const handleLevelUp = () => {
