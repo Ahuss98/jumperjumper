@@ -36,6 +36,23 @@ const randomWordGen = (arrayOfWords:string[][]) => {
   }
 }
 
+const handleHighscore = () => {
+  if(score>highScore){
+    highScore = score
+  }
+}
+
+const handleLevelUp = () => {
+  ++wordCleared 
+  if(wordCleared % 2 === 0 && score !== 0){
+    level ++
+  }
+}
+
+const handleScoreUpdate = () => {
+  scoreNumb.innerText = score.toString()
+}
+
 const handleGameLoss = (reason:string) => {
   if(isGameActive){
     isGameActive = false
@@ -45,11 +62,14 @@ const handleGameLoss = (reason:string) => {
       losingText.classList.add('losing-text');
       gameTextContainer.appendChild(losingText);
     }
-    if(reason === 'collision'){
-      losingText.innerText = 'you missed timed your jump'
+    if(reason === 'rockCollision'){
+      losingText.innerText = 'you missed timed your jump!'
     }
     if(reason === 'typing'){
-      losingText.innerText = 'you typed the wrong letter'
+      losingText.innerText = 'you typed the wrong letter!'
+    }
+    if(reason === 'wordCollision'){
+      losingText.innerText = 'you didnt type fast enough!'
     }
     if( score >= highScore){
       menuTextHighscore.innerText =  `New Highscore !!!`
@@ -66,54 +86,46 @@ const handleGameLoss = (reason:string) => {
     body.style.backgroundImage = `url(${loadingBackgroundImage})`
     body.style.backgroundRepeat = 'repeat' 
     handleObstacleChangeToRock()
+    handleHighscore()
+    score = 0
+    handleScoreUpdate()
+    wordCleared = 0
+    level = 0
+    randomWordGen(wordsArrayLevel)
   }
 }
 
-const handlemenu = () => {
+const handleMenu = () => {
   if(!isGameActive){
-  isGameActive = true
-  gameContainer.style.display = 'block'
-  menu.style.display = 'none'
-  body.style.backgroundImage = `url(${inGameBackgroundImage})`
-  body.style.backgroundRepeat = 'repeat-x' 
-  backGroundMusic.play()
-  randomWordGen(wordsArrayLevel)
-}
-}
-
-const handleHighscore = () => {
-  if(score>highScore){
-    highScore = score
+    isGameActive = true
+    gameContainer.style.display = 'block'
+    menu.style.display = 'none'
+    body.style.backgroundImage = `url(${inGameBackgroundImage})`
+    body.style.backgroundRepeat = 'repeat-x' 
+    backGroundMusic.play()
+    randomWordGen(wordsArrayLevel)
   }
 }
 
-const handleLevelUp = () => {
-  if(wordCleared % 2 === 0 && score !== 0){
-  level ++
-  }
-}
-
-const handleScoreUpdate = () => {
-  scoreNumb.innerText = score.toString()
-}
 
 const handleObstacleChangeToWord = () => {
   if(rockObstacle){
+    rockObstacle = false
     block.innerText = word.join('')
     block.classList.add('slow-obstacle')
+    block.style.display = 'block'
     rock.classList.remove('obstacle')
     rock.style.display = 'none'
-    block.style.display = 'block'
-    rockObstacle = false
-  }}
+  }
+}
 
 const handleObstacleChangeToRock = () => {
   if(!rockObstacle){
-  rock.classList.add('obstacle')
-  block.classList.remove('slow-obstacle')
-  block.style.display = 'none'
-  rock.style.display = 'block'
-  rockObstacle = true
+    rockObstacle = true
+    rock.classList.add('obstacle')
+    rock.style.display = 'block'
+    block.classList.remove('slow-obstacle')
+    block.style.display = 'none'
   }
 }
 
@@ -141,33 +153,22 @@ const handleSpaceJump = (event: KeyboardEvent) => {
 }
 
 const handleTyping = (event: KeyboardEvent) => {
-  let currentIndex:number = 0
   if(!rockObstacle) {
-      const currentLetter = word[currentIndex]
+    const currentLetter = word[0]
     if (event.key === currentLetter){
       typeNoise.currentTime = 0;
       typeNoise.play()
       word.shift()
       block.innerText = word.join('')
-      handleScoreUpdate()
       if(word.length === 0){
         wordComplete.play()
         score++
-        ++wordCleared 
         handleScoreUpdate()
         handleLevelUp()
         randomWordGen(wordsArrayLevel)
       }
     } else {
       handleGameLoss('typing')
-      handleHighscore()
-      score = 0
-      wordCleared = 0
-      level = 0
-      currentIndex = 0;
-      randomWordGen(wordsArrayLevel)
-      handleObstacleChangeToRock()
-      handleScoreUpdate()
     }  
   }
 }
@@ -179,11 +180,9 @@ const handleClickWord = () => {
     typeNoise.play()
     word.shift()
     block.innerText = word.join('')
-    handleScoreUpdate()
     if(word.length === 0){
       wordComplete.play()
       score++
-      ++wordCleared 
       handleScoreUpdate()
       handleLevelUp()
       randomWordGen(wordsArrayLevel)
@@ -191,16 +190,14 @@ const handleClickWord = () => {
   }
 }
 
-  setInterval(() => {
-    const playerPositionTop = player.offsetTop as number
-    const blockPositionLeft = block.offsetLeft as number
-    const rockPositionLeft = rock.offsetLeft as number 
-  if(playerPositionTop > 200  && (rockPositionLeft < 30 && rockPositionLeft > 10) || blockPositionLeft < 50 && blockPositionLeft > 10){
-    handleHighscore()
-    handleGameLoss('collision')
-    score = 0
-    wordCleared = 0
-    level = 0
+setInterval(() => {
+  const playerPositionTop = player.offsetTop as number
+  const wordPositionLeft = block.offsetLeft as number
+  const rockPositionLeft = rock.offsetLeft as number 
+  if(playerPositionTop > 200  && (rockPositionLeft < 30 && rockPositionLeft > 10)){
+    handleGameLoss('rockCollision')
+  } else if(wordPositionLeft < 50 && wordPositionLeft > 10){
+    handleGameLoss('wordCollision')
   }
   if(rockPositionLeft < -40){
     if(score !== 0 && score % 4 === 0){
@@ -210,10 +207,10 @@ const handleClickWord = () => {
   if(score % 4 !== 0){
     handleObstacleChangeToRock()
   }
-  }, 10)
+}, 10)
 
 
-menuBtn.addEventListener('click',handlemenu)
+menuBtn.addEventListener('click',handleMenu)
 block.addEventListener('click',handleClickWord)
 document.addEventListener('click', handleJump)
 document.addEventListener('keydown',handleSpaceJump)
