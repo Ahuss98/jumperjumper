@@ -2,7 +2,6 @@ import './styles/styles.scss'
 import { backGroundMusic,wordComplete,jumpNoise,typeNoise,losingNoise } from './audio' //these are the audio files I used 
 import { wordsArrayLevel } from './data' //an array with arrays with words of certain lengths
 import inGameBackgroundImage from '../public/media/modified_underground_space_with_gap.png'
-import repeatingBackground from '../public/media/Screenshot 2025-01-18 at 17.11.23.png'
 import loadingBackgroundImage from '../public/media/sky.webp'
 
 //grabs the html elements
@@ -25,7 +24,7 @@ if(!player|| !block || !rock || !scoreNumb || !gameContainer || !menu || !menuBt
 }
 
 //these are all the global variables i useed for the project for control flow all set to default values for inital game functionality
-let word: string[] = ['t','y','p','e'] //first word will alwayse be type so the user knows not to jump
+let word: string[] = [] //this is what will be displayed when obstacle changes
 let score: number = 0;
 let isGameActive: boolean = false //for ending the game screen
 let rockObstacle: boolean = true  //for checking state of obstacle
@@ -86,36 +85,36 @@ const handleGameLoss = (reason:string) => {
 }
 //checks wheather game is inactive first then displays the the game container and hides the menu
 const handlemenu = () => {
-    if(!isGameActive){
-    isGameActive = true
-    gameContainer.style.display = 'block'
-    menu.style.display = 'none'
-    body.style.backgroundImage = `url(${inGameBackgroundImage})`
-      body.style.backgroundRepeat = 'repeat-x' 
-    backGroundMusic.play()
-    randomWordGen(wordsArrayLevel)
-  }
+  if(!isGameActive){
+  isGameActive = true
+  gameContainer.style.display = 'block'
+  menu.style.display = 'none'
+  body.style.backgroundImage = `url(${inGameBackgroundImage})`
+  body.style.backgroundRepeat = 'repeat-x' 
+  backGroundMusic.play()
+  randomWordGen(wordsArrayLevel)
+}
 }
 
-//upadtes the highscore
+//upadtes the highscore if score higher than the previous highscore and then reassignes the value
 const handleHighscore = () => {
   if(score>highScore){
     highScore = score
   }
 }
 
-
-//updates the level
+//updates the level if 2 words are cleared and isnt the first obstacle 
 const handleLevelUp = () => {
-      if(wordCleared % 2 === 0 && score !== 0){
-      level ++
-      }
+  if(wordCleared % 2 === 0 && score !== 0){
+  level ++
+  }
 }
 
 //updates the score on screen
 const handleScoreUpdate = () => {
   scoreNumb.innerText = score.toString()
 }
+
 //changes display to show to word obstacle and only triggering is rockObstacle falg is true
 const handleObstacleChangeToWord = () => {
   if(rockObstacle){
@@ -126,16 +125,17 @@ const handleObstacleChangeToWord = () => {
     block.style.display = 'block'
     rockObstacle = false
   }}
+
 //changes display to show to word rock and only triggering is rockObstacle falg is false
-  const handleObstacleChangeToRock = () => {
-      if(!rockObstacle){
-      rock.classList.add('obstacle')
-      block.classList.remove('slow-obstacle')
-      block.style.display = 'none'
-      rock.style.display = 'block'
-      rockObstacle = true
-      }
+const handleObstacleChangeToRock = () => {
+  if(!rockObstacle){
+  rock.classList.add('obstacle')
+  block.classList.remove('slow-obstacle')
+  block.style.display = 'none'
+  rock.style.display = 'block'
+  rockObstacle = true
   }
+}
 
 const handleJump = () => {
   //this ensures you cant click jump if word obstacle is on screen
@@ -155,6 +155,7 @@ const handleJump = () => {
     }
   }
 }
+
 //if the user wants to jump with the space key it will check for the input and then invoke the handleJump
 const handleSpaceJump = (event: KeyboardEvent) => {
   if(rockObstacle){
@@ -165,7 +166,6 @@ const handleSpaceJump = (event: KeyboardEvent) => {
     }
   }
 }
-
 
 const handleTyping = (event: KeyboardEvent) => {
   let currentIndex:number = 0
@@ -215,13 +215,13 @@ const handleClickWord = () => {
     block.innerText = word.join('')
     handleScoreUpdate()
     if(word.length === 0){
-        wordComplete.play()
-        score++
-        ++wordCleared 
-        handleScoreUpdate()
-        handleLevelUp()
-        randomWordGen(wordsArrayLevel)
-      }
+      wordComplete.play()
+      score++
+      ++wordCleared 
+      handleScoreUpdate()
+      handleLevelUp()
+      randomWordGen(wordsArrayLevel)
+    }
   }
 }
 
@@ -232,28 +232,26 @@ const handleClickWord = () => {
     const blockPositionLeft = block.offsetLeft as number  //start at 350 ends of screen at 0
     const rockPositionLeft = rock.offsetLeft as number //start at 350 ends of screen at 0
     //logic to check weather the positions of the the pieces have collided by checking certain positions are true then a collision has happened
-    if(playerPositionTop > 200  && (rockPositionLeft < 30 && rockPositionLeft > 10) || blockPositionLeft < 50 && blockPositionLeft > 10){
+  if(playerPositionTop > 200  && (rockPositionLeft < 30 && rockPositionLeft > 10) || blockPositionLeft < 50 && blockPositionLeft > 10){
     //produce a loss if it meets this criteria
     handleHighscore()
     handleGameLoss('collision')
     score = 0
     wordCleared = 0
     level = 0
-    }
+  }
     //ensures the word only apears when the rock is off or aat the end of the screen
-    if(rockPositionLeft < -40){
-      //logic to change to word which has logic inside to enure to only happens when it a rock first
-      if(score !== 0 && score % 4 === 0){
-        handleObstacleChangeToWord()
-      }
+  if(rockPositionLeft < -40){
+    //logic to change to word which has logic inside to enure to only happens when it a rock first
+    if(score !== 0 && score % 4 === 0){
+      handleObstacleChangeToWord()
     }
-    if(score % 4 !== 0){
-      //logic to change to rock which has logic inside to enure to only happens when it a word first
-      handleObstacleChangeToRock()
-    }
+  }
+  if(score % 4 !== 0){
+    //logic to change to rock which has logic inside to enure to only happens when it a word first
+    handleObstacleChangeToRock()
+  }
   }, 10)
-
-
 
 //allowing user to click or use space bar making it mobile friendly
 //event listener to allow user to start game and restart game
