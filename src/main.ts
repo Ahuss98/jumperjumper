@@ -3,6 +3,8 @@ import { backGroundMusic,wordComplete,jumpNoise,typeNoise,losingNoise } from './
 import { wordsArrayLevel } from './data'
 import inGameBackgroundImage from '../public/media/modified_underground_space_with_gap.png'
 import loadingBackgroundImage from '../public/media/sky.webp'
+import unMutePic from '../public/media/unmute.svg'
+import mutePic from '../public/media/mute.svg'
 
 const player = document.querySelector<HTMLDivElement>('.player')
 const block = document.querySelector<HTMLDivElement>('.block')
@@ -15,8 +17,9 @@ const gameTextContainer = document.querySelector<HTMLDivElement>('.game-start__t
 const menuTextHighscore = document.querySelector<HTMLParagraphElement>('.game-start__text--highscore')
 const menuTextScore = document.querySelector<HTMLParagraphElement>('.game-start__text--currentscore')
 const body = document.querySelector<HTMLBodyElement>('body')
+const mute = document.querySelector<HTMLImageElement>('.game-start__mute')
 
-if(!player|| !block || !rock || !scoreNumb || !gameContainer || !menu || !menuBtn || !menuTextHighscore || !menuTextScore || !body || !gameTextContainer){
+if(!player|| !block || !rock || !scoreNumb || !gameContainer || !menu || !menuBtn || !menuTextHighscore || !menuTextScore || !body || !gameTextContainer || !mute){
   throw new Error(`it didnt work`)
 }
 
@@ -27,6 +30,7 @@ let rockObstacle: boolean = true
 let wordCleared:number = 0
 let level:number = 0 
 let highScore:number = 0 
+let isMute:boolean = false
 
 const randomWordGen = (arrayOfWords:string[][]) => {
   if(level < arrayOfWords.length){
@@ -107,6 +111,26 @@ const handleMenu = () => {
   }
 }
 
+const handleMute = () => {
+  if(!isMute){
+    backGroundMusic.volume = 0
+    wordComplete.volume = 0
+    jumpNoise.volume = 0
+    typeNoise.volume = 0
+    losingNoise.volume = 0
+    console.log(isMute,'in muting')
+    mute.src = `${mutePic}`
+    isMute = true
+  }else if(isMute){
+    backGroundMusic.volume = 1
+    wordComplete.volume = 1
+    jumpNoise.volume = 1
+    typeNoise.volume = 1
+    losingNoise.volume = 1
+    mute.src = `${unMutePic}`
+    isMute = false
+  }
+}
 
 const handleObstacleChangeToWord = () => {
   if(rockObstacle){
@@ -130,7 +154,7 @@ const handleObstacleChangeToRock = () => {
 }
 
 const handleJump = () => {
-  if(rockObstacle){
+  if(rockObstacle && isGameActive){
     if(!player.classList.contains('jump')){
       player.classList.add('jump')
       jumpNoise.play()
@@ -144,7 +168,7 @@ const handleJump = () => {
 }
 
 const handleSpaceJump = (event: KeyboardEvent) => {
-  if(rockObstacle){
+  if(rockObstacle && isGameActive){
     if(event.code ==='Space') {
       event.preventDefault();
       handleJump()
@@ -210,9 +234,12 @@ setInterval(() => {
 }, 10)
 
 
-menuBtn.addEventListener('click',handleMenu)
-block.addEventListener('click',handleClickWord)
+
+
+menuBtn.addEventListener('click', handleMenu)
+block.addEventListener('click', handleClickWord)
+mute.addEventListener('click', handleMute)
 document.addEventListener('click', handleJump)
-document.addEventListener('keydown',handleSpaceJump)
-document.addEventListener('keydown',handleTyping)
+document.addEventListener('keydown', handleSpaceJump)
+document.addEventListener('keydown', handleTyping)
 

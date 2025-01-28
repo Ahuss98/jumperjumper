@@ -6,6 +6,12 @@ $sky : rgb(167, 238, 238);
 $floor : rgb(147, 95, 57);
 $mobile : 480px;
 
+* {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 head{
     padding: 0px;
     margin: 0px;
@@ -37,25 +43,6 @@ body{
 }
 .main-display-container{
     display: none;
-}
-@media only screen and (min-width:($mobile + 1)) {
-.game-start {
-        &__text {
-            &--highscore {
-                font-family: 'Nabla', sans-serif, italic;
-            }
-            &--currentscore {
-                font-family: 'Nabla', sans-serif, italic;
-            }
-        }
-        &__btn {
-            font-family: 'Nabla',
-                sans-serif, italic;
-        }
-    }
-        h1 {
-            font-family: 'Nabla', sans-serif, italic;
-        }
 }
 .game-start{
     display: flex;
@@ -93,11 +80,19 @@ body{
     &__btn{
         background-color: $floor;
         
-        }
+    }
     &__btn:hover{
         color: #fff;
         transform: scale(1.5);
         cursor:pointer;
+    }
+    &__mute{
+        max-width: 7%;
+        background-color: $floor;
+        position:absolute;
+        top: 5px;
+        left: 90%;
+        border: 5px solid black;
     }
 }
 .title-container {
@@ -108,4 +103,33 @@ body{
 h1 {
     color: yellow;
     text-shadow: 1px 1px 2px black; 
+}
+@media only screen and (min-width:($mobile + 1)) {
+.game-start {
+        &__text {
+            &--highscore {
+                font-family: 'Nabla', sans-serif, italic;
+            }
+            &--currentscore {
+                font-family: 'Nabla', sans-serif, italic;
+            }
+        }
+        &__btn {
+            font-family: 'Nabla',
+                sans-serif, italic;
+        }
+        &__mute {
+            font-family: 'Nabla',
+                sans-serif, italic;
+            max-width: 7%;
+            background-color: $floor;
+            position: absolute;
+            top: 10%;
+            left: 90%;
+            border: 5px solid black;
+        }
+    }
+        h1 {
+            font-family: 'Nabla', sans-serif, italic;
+        }
 }
