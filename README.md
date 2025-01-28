@@ -9,7 +9,7 @@ Welcome to my first **TypeScript** game project, **JumperJumper**, where I combi
 
 ### Key Features:
 - **Jump and Type Gameplay**: Avoid obstacles by jumping and type words accurately for advanced challenges.
-- **Dynamic Difficulty**: The game becomes more challenging as you progress, with longer words and stricter timers.
+- **Dynamic Difficulty**: The game becomes more challenging as you progress.
 - **Sleek Design**: A visually appealing environment with changing backgrounds, animated elements, and smooth transitions.
 - **Audio Integration**: Background music and sound effects enhance the gameplay experience.
 
@@ -32,7 +32,7 @@ This project represents a significant milestone in my development journey, combi
 **Extra functionality:**
 - Every 3 successful jumps, the block turns into a word.
 - The user must type this word to clear the jump.
-  - The word can increase in length to raise difficulty, and a timer is imposed.
+  - The word can increase in length to raise difficulty.
 
 ---
 
@@ -138,4 +138,12 @@ This project represents a significant milestone in my development journey, combi
 
 ---
 
-This project has been a rewarding journey, blending creativity and technical knowledge. I’m excited to apply these lessons to future endeavors!
+This project has been a rewarding journey, blending creativity and technical knowledge. I’m excited to apply these lessons in the future!
+
+## 🤝 Contribution & Feedback
+
+Feel free to explore the project and provide feedback!
+
+---
+
+Thank you for visiting! 😊 
