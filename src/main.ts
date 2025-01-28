@@ -118,7 +118,6 @@ const handleMute = () => {
     jumpNoise.volume = 0
     typeNoise.volume = 0
     losingNoise.volume = 0
-    console.log(isMute,'in muting')
     mute.src = `${mutePic}`
     isMute = true
   }else if(isMute){
