@@ -1,44 +1,39 @@
 import './styles/styles.scss'
-import gameMusic from '../public/sound/cottagecore-17463.mp3'
-import finishedWord from '../public/sound/achievement-video-game-type-1-230515.mp3'
-import JumpSound from '../public/sound/retro-jump-3-236683.mp3'
-import typeSound from '../public/sound/retro-coin-1-236677.mp3'
-import losingMusic from '../public/sound/failure-1-89170.mp3'
+import { backGroundMusic,wordComplete,jumpNoise,typeNoise,losingNoise } from './audio' //these are the audio files I used 
+import { wordsArrayLevel } from './data' //an array with arrays with words of certain lengths
 import inGameBackgroundImage from '../public/media/modified_underground_space_with_gap.png'
 import loadingBackgroundImage from '../public/media/sky.webp'
-import { wordsArrayLevel } from './data'
 
-//grabs the html element with a classname of player
+//grabs the html elements
 const player = document.querySelector<HTMLDivElement>('.player')
 const block = document.querySelector<HTMLDivElement>('.block')
 const rock = document.querySelector<HTMLImageElement>('.block--img')
 const scoreNumb = document.querySelector<HTMLParagraphElement>('.score--number')
 const gameContainer = document.querySelector<HTMLDivElement>('.main-display-container')
-const gameStart = document.querySelector<HTMLDivElement>('.game-start')
-const gameStartBtn = document.querySelector<HTMLButtonElement>('.game-start__btn')
+const menu = document.querySelector<HTMLDivElement>('.game-start')
+const menuBtn = document.querySelector<HTMLButtonElement>('.game-start__btn')
 const gameTextContainer = document.querySelector<HTMLDivElement>('.game-start__text')
-const gameStartTextHighscore = document.querySelector<HTMLParagraphElement>('.game-start__text--highscore')
-const gameStartTextScore = document.querySelector<HTMLParagraphElement>('.game-start__text--currentscore')
+const menuTextHighscore = document.querySelector<HTMLParagraphElement>('.game-start__text--highscore')
+const menuTextScore = document.querySelector<HTMLParagraphElement>('.game-start__text--currentscore')
 const body = document.querySelector<HTMLBodyElement>('body')
 
-if(!player|| !block || !rock || !scoreNumb || !gameContainer || !gameStart || !gameStartBtn || !gameStartTextHighscore || !gameStartTextScore || !body || !gameTextContainer){
+
+//checks if the element returns null and throws a error to the terminal
+if(!player|| !block || !rock || !scoreNumb || !gameContainer || !menu || !menuBtn || !menuTextHighscore || !menuTextScore || !body || !gameTextContainer){
   throw new Error(`it didnt work`)
 }
 
-const backGroundMusic = new Audio(gameMusic)
-const wordComplete = new Audio(finishedWord)
-const jumpNoise = new Audio(JumpSound)
-const typeNoise = new Audio(typeSound)
-const losingNoise = new Audio(losingMusic)
-
+//these are all the global variables i useed for the project for control flow all set to default values for inital game functionality
 let word: string[] = ['t','y','p','e'] //first word will alwayse be type so the user knows not to jump
 let score: number = 0;
 let isGameActive: boolean = false //for ending the game screen
-let rockObstacle: boolean = true
-let level = 0
-let wordCleared = 0
-let highScore = 0
+let rockObstacle: boolean = true  //for checking state of obstacle
+let wordCleared:number = 0 //checks how many words completed 
+let level:number = 0  //updates dending on conditions and is used to change word length difficulty selectd from array
+let highScore:number = 0 //displays users highest score achieved
 
+
+//selects an array from my data.ts depending on level and selects a random word from said array and then reassigns the word variable
 const randomWordGen = (arrayOfWords:string[][]) => {
   if(level <= arrayOfWords.length){
     const currArr: string[] = arrayOfWords[level]
@@ -47,70 +42,78 @@ const randomWordGen = (arrayOfWords:string[][]) => {
   }
 }
 
+//this uses control flow and the an argument passed to the function to display different messeges on how the user lost
 const handleGameLoss = (reason:string) => {
+  //ensures game is active before displaying message to avoid errors
   if(isGameActive){
-    console.log(isGameActive,'in true')
+    //sets the game state to false for next part of control flow and to avoid erros when playiong game
     isGameActive = false
-
+    //pulls lsing text if already exists
     let losingText = document.querySelector<HTMLParagraphElement>('.losing-text');
-
+    //check if value of losing text is null to avoid recreate element multiple times
     if (!losingText) {
       // If it doesn't exist create it 
       losingText = document.createElement('p');
       losingText.classList.add('losing-text');
       gameTextContainer.appendChild(losingText);
     }
+    //control flow for reason of loss
     if(reason === 'collision'){
       losingText.innerText = 'you missed timed your jump'
     }
     if(reason === 'typing'){
       losingText.innerText = 'you typed the wrong letter'
     }
+    //displays highscore if a new highscore is reached
     if( score >= highScore){
-      gameStartTextHighscore.innerText =  `New Highscore !!!`
-      gameStartTextScore.innerText = `${score}`
+      menuTextHighscore.innerText =  `New Highscore !!!`
+      menuTextScore.innerText = `${score}`
     } else {
-      gameStartTextScore.innerText = `Score: ${score}`
-      gameStartTextHighscore.innerText =  `HighScore: ${highScore}`
+      menuTextScore.innerText = `Score: ${score}`
+      menuTextHighscore.innerText =  `HighScore: ${highScore}`
     }
-
+    //hides main game container and displays container for the menu
     gameContainer.style.display = 'none'
-    gameStart.style.display = 'flex'
+    menu.style.display = 'flex'
     backGroundMusic.pause(); // Stops music
     backGroundMusic.currentTime = 0; //ressets music track back to start
-    losingNoise.play()
-    body.style.backgroundImage = `url(${loadingBackgroundImage})`
-    handleObstacleChangeToRock()
+    losingNoise.play() // plays music from the start
+    body.style.backgroundImage = `url(${loadingBackgroundImage})` //changes background image 
+    handleObstacleChangeToRock()  //changes obstacle back to rock for next game
   }
 }
+
+//upadtes the highscore
 const handleHighscore = () => {
   if(score>highScore){
     highScore = score
   }
 }
-const handleGameStart = () => {
+
+//checks wheather game is inactive first then displays the the game container and hides the menu
+const handlemenu = () => {
     if(!isGameActive){
-    console.log(isGameActive,'in false')
     isGameActive = true
-    console.log('you clicked start game')
     gameContainer.style.display = 'block'
-    gameStart.style.display = 'none'
+    menu.style.display = 'none'
     body.style.backgroundImage = `url(${inGameBackgroundImage})`
     backGroundMusic.play()
     randomWordGen(wordsArrayLevel)
   }
 }
 
+//updates the level
 const handleLevelUp = () => {
       if(wordCleared % 2 === 0 && score !== 0){
       level ++
       }
-      console.log(level,'this is the level')
 }
+
+//updates the score on screen
 const handleScoreUpdate = () => {
   scoreNumb.innerText = score.toString()
 }
-//changes display to show to word obstacle
+//changes display to show to word obstacle and only triggering is rockObstacle falg is true
 const handleObstacleChangeToWord = () => {
   if(rockObstacle){
     block.innerText = word.join('')
@@ -120,7 +123,7 @@ const handleObstacleChangeToWord = () => {
     block.style.display = 'block'
     rockObstacle = false
   }}
-
+//changes display to show to word rock and only triggering is rockObstacle falg is false
   const handleObstacleChangeToRock = () => {
       if(!rockObstacle){
       rock.classList.add('obstacle')
@@ -128,20 +131,8 @@ const handleObstacleChangeToWord = () => {
       block.style.display = 'none'
       rock.style.display = 'block'
       rockObstacle = true
-      // sendRockObstacle()
       }
   }
-
-  // const sendRockObstacle = () => {
-  //   if(!rock.classList.contains('obstacle')){
-  //     rock.classList.add('obstacle')
-  //     console.log('adding')
-  //     setTimeout(() => {
-  //       console.log('remoiving')
-  //       rock.classList.remove('obstacle')
-  //     },2000)
-  //   }
-  // }
 
 const handleJump = () => {
   //this ensures you cant click jump if word obstacle is on screen
@@ -156,62 +147,62 @@ const handleJump = () => {
       setTimeout(() => {
         player.classList.remove('jump')
         //score only updates when this happens to ensure score dosnt update if un seccesful jump
-        // hasJumped = false
         handleScoreUpdate()
       }, 1000);
     }
   }
 }
-
+//if the user wants to jump with the space key it will check for the input and then invoke the handleJump
 const handleSpaceJump = (event: KeyboardEvent) => {
   if(rockObstacle){
     if(event.code ==='Space') {
-      console.log('in handle tyuping on rock obstacle',event.code)
+      //disables the default scroll function of the space key
       event.preventDefault();
       handleJump()
     }
   }
 }
 
-let currentIndex:number = 0
 
 const handleTyping = (event: KeyboardEvent) => {
+  let currentIndex:number = 0
   if(!rockObstacle) {
       const currentLetter = word[currentIndex]
     if (event.key === currentLetter){
+      //logic for retriggering word on every click
       typeNoise.currentTime = 0;
       typeNoise.play()
+      //removes the first letter when triggered
       word.shift()
+      //updates the visual word to reflect the word to type
       block.innerText = word.join('')
-      console.log(word.length)
-      console.log('correct letter')
       handleScoreUpdate()
       if(word.length === 0){
+        //logic for comppleted word and creates a new word to be displayed next time this function is invoked
         wordComplete.play()
         score++
         ++wordCleared 
-        console.log(wordCleared,'<-- word cleared score')
         handleScoreUpdate()
         handleLevelUp()
         randomWordGen(wordsArrayLevel)
       }
     } else {
-      console.log('incorrect letter')
-      console.log(currentLetter)
       handleGameLoss('typing')
-      // alert('you lost')
       handleHighscore()
+      //resets all global variables back to default values for new game
       score = 0
       wordCleared = 0
       level = 0
       currentIndex = 0;
-      randomWordGen(wordsArrayLevel)
+      randomWordGen(wordsArrayLevel) // generates a new word and assigns it because level is now 0
       //makes next obstacle in new game back to rock
       handleObstacleChangeToRock()
       handleScoreUpdate()
     }  
   }
 }
+
+//similar logic to handletyping but for clicking the word
 const handleClickWord = () => {
   if(!rockObstacle){
     typeNoise.pause()
@@ -224,7 +215,6 @@ const handleClickWord = () => {
         wordComplete.play()
         score++
         ++wordCleared 
-        console.log(wordCleared,'<-- word cleared score')
         handleScoreUpdate()
         handleLevelUp()
         randomWordGen(wordsArrayLevel)
@@ -232,78 +222,44 @@ const handleClickWord = () => {
   }
 }
 
-  const smooth = () => {
+  //this is my hit detection logic which uses setInterval and does checks every set time interval which i can change
+  setInterval(() => {
+    //these are variables to collect the data of the current positions of the interactive pieces the users interacts with
     const playerPositionTop = player.offsetTop as number //start at 250 jumps to 175
     const blockPositionLeft = block.offsetLeft as number  //start at 350 ends of screen at 0
     const rockPositionLeft = rock.offsetLeft as number //start at 350 ends of screen at 0
-    //need to fix this for new positions
+    //logic to check weather the positions of the the pieces have collided by checking certain positions are true then a collision has happened
     if(playerPositionTop > 200  && (rockPositionLeft < 30 && rockPositionLeft > 10) || blockPositionLeft < 50 && blockPositionLeft > 10){
-    //alert('u lose')
+    //produce a loss if it meets this criteria
     handleHighscore()
     handleGameLoss('collision')
     score = 0
     wordCleared = 0
     level = 0
     }
+    //ensures the word only apears when the rock is off or aat the end of the screen
     if(rockPositionLeft < -40){
+      //logic to change to word which has logic inside to enure to only happens when it a rock first
       if(score !== 0 && score % 4 === 0){
         handleObstacleChangeToWord()
       }
     }
-  // console.log(playerPositionTop,rockPositionLeft)
-    console.log(score)
     if(score % 4 !== 0){
-      // sendRockObstacle()
+      //logic to change to rock which has logic inside to enure to only happens when it a word first
       handleObstacleChangeToRock()
     }
-  
-  }
-
-
-  //research requestanimationFrame to i can explain it 
-  const test = () => {
-    smooth()
-    requestAnimationFrame(test)
-  }
-
-  requestAnimationFrame(test)
-
-  // setInterval(() => {
-  //   const playerPositionTop = player.offsetTop as number //start at 250 jumps to 175
-  //   const blockPositionLeft = block.offsetLeft as number  //start at 350 ends of screen at 0
-  //   const rockPositionLeft = rock.offsetLeft as number //start at 350 ends of screen at 0
-  //   //need to fix this for new positions
-  //   if(playerPositionTop > 200  && (rockPositionLeft < 30 && rockPositionLeft > 10) || blockPositionLeft < 50 && blockPositionLeft > 10){
-  //   //alert('u lose')
-  //   handleHighscore()
-  //   handleGameLoss('collision')
-  //   score = 0
-  //   wordCleared = 0
-  //   level = 0
-  //   }
-  //   if(rockPositionLeft < -40){
-  //     if(score !== 0 && score % 4 === 0){
-  //       handleObstacleChangeToWord()
-  //     }
-  //   }
-  // // console.log(playerPositionTop,rockPositionLeft)
-  //   console.log(score)
-  //   if(score % 4 !== 0){
-  //     // sendRockObstacle()
-  //     handleObstacleChangeToRock()
-  //   }
-  // }, 10)
+  }, 10)
 
 
 
 //allowing user to click or use space bar making it mobile friendly
-gameStartBtn.addEventListener('click',handleGameStart)
+//event listener to allow user to start game and restart game
+menuBtn.addEventListener('click',handlemenu)
+//this allow users to click on word instead of typing
 block.addEventListener('click',handleClickWord)
+
+//event listeners applied to the dom to allow user to type or click anywhere on screen to trigger events
 document.addEventListener('click', handleJump)
 document.addEventListener('keydown',handleSpaceJump)
 document.addEventListener('keydown',handleTyping)
 
-
-
-//adding keyboard event to the document an not a variable as we want the keyboard events to global also changed the click to the document so that the player can click anywhere on the screen
-// document.addEventListener('keydown', handleTyping)
