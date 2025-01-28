@@ -1,5 +1,5 @@
 import './styles/styles.scss'
-import { backGroundMusic,wordComplete,jumpNoise,typeNoise,losingNoise } from './audio'
+import { backGroundMusic,wordComplete,jumpNoise,typeNoise,losingNoise,menuMusic } from './audio'
 import { wordsArrayLevel } from './data'
 import inGameBackgroundImage from '../public/media/modified_underground_space_with_gap.png'
 import loadingBackgroundImage from '../public/media/sky.webp'
@@ -25,12 +25,13 @@ if(!player|| !block || !rock || !scoreNumb || !gameContainer || !menu || !menuBt
 
 let word: string[] = []
 let score: number = 0;
-let isGameActive: boolean = false
-let rockObstacle: boolean = true
-let wordCleared:number = 0
-let level:number = 0 
-let highScore:number = 0 
-let isMute:boolean = false
+let isGameActive: boolean = false;
+let rockObstacle: boolean = true;
+let wordCleared:number = 0;
+let level:number = 0;
+let highScore:number = 0;
+let isMute:boolean = false;
+menuMusic.play()
 
 const randomWordGen = (arrayOfWords:string[][]) => {
   if(level < arrayOfWords.length){
@@ -96,10 +97,13 @@ const handleGameLoss = (reason:string) => {
     wordCleared = 0
     level = 0
     randomWordGen(wordsArrayLevel)
+    setTimeout(() => {
+      menuMusic.play()
+    },1750)
   }
 }
 
-const handleMenu = () => {
+const handleGameStart = () => {
   if(!isGameActive){
     isGameActive = true
     gameContainer.style.display = 'block'
@@ -107,6 +111,8 @@ const handleMenu = () => {
     body.style.backgroundImage = `url(${inGameBackgroundImage})`
     body.style.backgroundRepeat = 'repeat-x' 
     backGroundMusic.play()
+    menuMusic.pause()
+    menuMusic.currentTime = 0
     randomWordGen(wordsArrayLevel)
   }
 }
@@ -118,6 +124,7 @@ const handleMute = () => {
     jumpNoise.volume = 0
     typeNoise.volume = 0
     losingNoise.volume = 0
+    menuMusic.volume = 0
     mute.src = `${mutePic}`
     isMute = true
   }else if(isMute){
@@ -126,6 +133,7 @@ const handleMute = () => {
     jumpNoise.volume = 1
     typeNoise.volume = 1
     losingNoise.volume = 1
+    menuMusic.volume = 1
     mute.src = `${unMutePic}`
     isMute = false
   }
@@ -235,7 +243,7 @@ setInterval(() => {
 
 
 
-menuBtn.addEventListener('click', handleMenu)
+menuBtn.addEventListener('click', handleGameStart)
 block.addEventListener('click', handleClickWord)
 mute.addEventListener('click', handleMute)
 document.addEventListener('click', handleJump)
