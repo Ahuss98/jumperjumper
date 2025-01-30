@@ -128,6 +128,12 @@ h1 {
             left: 90%;
             border: 5px solid black;
         }
+        &__mute:hover {
+            color: #fff;
+            transform: scale(1.1);
+            cursor: pointer;
+            border: 5px solid white;
+        }
     }
         h1 {
             font-family: 'Nabla', sans-serif, italic;

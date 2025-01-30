@@ -68,7 +68,7 @@ const handleGameLoss = (reason:string) => {
       gameTextContainer.appendChild(losingText);
     }
     if(reason === 'rockCollision'){
-      losingText.innerText = 'you missed timed your jump!'
+      losingText.innerText = 'you miss timed your jump!'
     }
     if(reason === 'typing'){
       losingText.innerText = 'you typed the wrong letter!'
