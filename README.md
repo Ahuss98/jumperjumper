@@ -20,6 +20,8 @@ This project represents a significant milestone in my development journey, combi
 ---
 
 ## Project Breakdown
+<details>
+  <summary>Click to Expand</summary>
 
 ### 🔄 Game Loop
 - The game starts.
@@ -90,6 +92,7 @@ This project represents a significant milestone in my development journey, combi
 - [x] Add background music.
 - [x] Add a finishing word sound.
 - [x] Add losing screen sound.
+</details>
 
 ---
 
