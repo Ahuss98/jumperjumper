@@ -76,7 +76,7 @@ const handleGameLoss = (reason:string) => {
     if(reason === 'wordCollision'){
       losingText.innerText = 'you didnt type fast enough!'
     }
-    if( score >= highScore){
+    if( score > highScore){
       menuTextHighscore.innerText =  `New Highscore !!!`
       menuTextScore.innerText = `${score}`
     } else {
@@ -98,7 +98,9 @@ const handleGameLoss = (reason:string) => {
     level = 0
     randomWordGen(wordsArrayLevel)
     setTimeout(() => {
-      menuMusic.play()
+      if(!isGameActive){
+        menuMusic.play()
+      }
     },1750)
   }
 }
@@ -111,6 +113,8 @@ const handleGameStart = () => {
     body.style.backgroundImage = `url(${inGameBackgroundImage})`
     body.style.backgroundRepeat = 'repeat-x' 
     backGroundMusic.play()
+    losingNoise.pause();
+    losingNoise.currentTime = 0
     menuMusic.pause()
     menuMusic.currentTime = 0
     randomWordGen(wordsArrayLevel)
@@ -252,4 +256,5 @@ mute.addEventListener('click', handleMute)
 document.addEventListener('click', handleJump)
 document.addEventListener('keydown', handleSpaceJump)
 document.addEventListener('keydown', handleTyping)
+document.addEventListener('DOMContentLoaded',handleMute)
 
