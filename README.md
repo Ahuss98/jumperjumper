@@ -133,11 +133,16 @@ This project represents a significant milestone in my development journey, combi
 
 ---
 
+### 🐛 Bugs
+- [ ] sometimes on first ever load of wepage keyframes dont work
+- [ ] when spam clicking the text while on mobile the satisfying ding noise dosnt reset straight after every press
+
 ### 🚀 Future Goals:
 
 - Expand the game with more levels and dynamic environments.
 - Incorporate multiplayer functionality to make the game more engaging.
 - Continue honing my TypeScript and game design skills to take on bigger projects.
+- Fix/Solve all bugs and find future bugs.
 
 ---
 
