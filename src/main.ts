@@ -30,8 +30,8 @@ let rockObstacle: boolean = true;
 let wordCleared:number = 0;
 let level:number = 0;
 let highScore:number = 0;
-let isMute:boolean = false;
-menuMusic.play()
+let isMute:boolean = true;
+
 
 const randomWordGen = (arrayOfWords:string[][]) => {
   if(level < arrayOfWords.length){
@@ -125,6 +125,7 @@ const handleMute = () => {
     typeNoise.volume = 0
     losingNoise.volume = 0
     menuMusic.volume = 0
+    menuMusic.pause()
     mute.src = `${mutePic}`
     isMute = true
   }else if(isMute){
@@ -134,6 +135,8 @@ const handleMute = () => {
     typeNoise.volume = 1
     losingNoise.volume = 1
     menuMusic.volume = 1
+    menuMusic.currentTime = 0
+    menuMusic.play()
     mute.src = `${unMutePic}`
     isMute = false
   }
